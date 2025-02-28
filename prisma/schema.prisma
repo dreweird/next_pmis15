@@ -1,0 +1,243 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model budget_assignment {
+  id        Int @id @default(autoincrement())
+  budget_id Int
+  ous_id    Int
+}
+
+model district {
+  id         Int    @id @default(autoincrement())
+  mfo_id     Int
+  province   String @db.VarChar(80)
+  municipal  String @db.VarChar(80)
+  district   Int
+  barangay   String @db.VarChar(80)
+  groups     String @db.VarChar(300)
+  target     Float  @db.Float
+  cost       Float  @db.Float
+  jan        Float  @default(0) @db.Float
+  feb        Float  @default(0) @db.Float
+  mar        Float  @default(0) @db.Float
+  apr        Float  @default(0) @db.Float
+  may        Float  @default(0) @db.Float
+  jun        Float  @default(0) @db.Float
+  jul        Float  @default(0) @db.Float
+  aug        Float  @default(0) @db.Float
+  sep        Float  @default(0) @db.Float
+  oct        Float  @default(0) @db.Float
+  nov        Float  @default(0) @db.Float
+  dece       Float  @default(0) @db.Float
+  flagged    Int    @db.TinyInt
+  remarks    String @db.VarChar(200)
+  remarks_q1 String @db.Text
+  remarks_q2 String @db.Text
+  remarks_q3 String @db.Text
+  remarks_q4 String @db.Text
+}
+
+model locked {
+  id     Int    @id @default(autoincrement())
+  month  String @db.VarChar(20)
+  locked Int    @db.TinyInt
+}
+
+model logs {
+  id           Int    @id @default(autoincrement())
+  user_id      Int
+  actions      String @db.VarChar(200)
+  date_created String @db.VarChar(20)
+}
+
+model mfo {
+  mfo_id           Int    @id @default(autoincrement())
+  user_id          Int
+  h1               String @db.VarChar(500)
+  h2               String @db.VarChar(500)
+  h3               String @db.VarChar(500)
+  h4               String @db.VarChar(500)
+  name             String @db.VarChar(500)
+  unit             String @db.Text
+  main             Int
+  area             Int
+  jan_pt           Float  @default(0) @db.Float
+  feb_pt           Float  @default(0) @db.Float
+  mar_pt           Float  @default(0) @db.Float
+  apr_pt           Float  @default(0) @db.Float
+  may_pt           Float  @default(0) @db.Float
+  jun_pt           Float  @default(0) @db.Float
+  jul_pt           Float  @default(0) @db.Float
+  aug_pt           Float  @default(0) @db.Float
+  sep_pt           Float  @default(0) @db.Float
+  oct_pt           Float  @default(0) @db.Float
+  nov_pt           Float  @default(0) @db.Float
+  dec_pt           Float  @default(0) @db.Float
+  jan_ot           Float  @default(0) @db.Float
+  feb_ot           Float  @default(0) @db.Float
+  mar_ot           Float  @default(0) @db.Float
+  apr_ot           Float  @default(0) @db.Float
+  may_ot           Float  @default(0) @db.Float
+  jun_ot           Float  @default(0) @db.Float
+  jul_ot           Float  @default(0) @db.Float
+  aug_ot           Float  @default(0) @db.Float
+  sep_ot           Float  @default(0) @db.Float
+  oct_ot           Float  @default(0) @db.Float
+  nov_ot           Float  @default(0) @db.Float
+  dec_ot           Float  @default(0) @db.Float
+  jan_dt           Float  @default(0) @db.Float
+  feb_dt           Float  @default(0) @db.Float
+  mar_dt           Float  @default(0) @db.Float
+  apr_dt           Float  @default(0) @db.Float
+  may_dt           Float  @default(0) @db.Float
+  jun_dt           Float  @default(0) @db.Float
+  jul_dt           Float  @default(0) @db.Float
+  aug_dt           Float  @default(0) @db.Float
+  sep_dt           Float  @default(0) @db.Float
+  oct_dt           Float  @default(0) @db.Float
+  nov_dt           Float  @default(0) @db.Float
+  dec_dt           Float  @default(0) @db.Float
+  flagged          Int    @default(0) @db.TinyInt
+  reviewer_remarks String @db.Text
+  jan_otc          Float  @default(0) @db.Float
+  feb_otc          Float  @default(0) @db.Float
+  mar_otc          Float  @default(0) @db.Float
+  apr_otc          Float  @default(0) @db.Float
+  may_otc          Float  @default(0) @db.Float
+  jun_otc          Float  @default(0) @db.Float
+  jul_otc          Float  @default(0) @db.Float
+  aug_otc          Float  @default(0) @db.Float
+  sep_otc          Float  @default(0) @db.Float
+  oct_otc          Float  @default(0) @db.Float
+  nov_otc          Float  @default(0) @db.Float
+  dec_otc          Float  @default(0) @db.Float
+  jan_dtc          Float  @default(0) @db.Float
+  feb_dtc          Float  @default(0) @db.Float
+  mar_dtc          Float  @default(0) @db.Float
+  apr_dtc          Float  @default(0) @db.Float
+  may_dtc          Float  @default(0) @db.Float
+  jun_dtc          Float  @default(0) @db.Float
+  jul_dtc          Float  @default(0) @db.Float
+  aug_dtc          Float  @default(0) @db.Float
+  sep_dtc          Float  @default(0) @db.Float
+  oct_dtc          Float  @default(0) @db.Float
+  nov_dtc          Float  @default(0) @db.Float
+  dec_dtc          Float  @default(0) @db.Float
+  jana_ot          Float  @default(0) @db.Float
+  jana_otc         Float  @default(0) @db.Float
+  feba_ot          Float  @default(0) @db.Float
+  feba_otc         Float  @default(0) @db.Float
+  mara_ot          Float  @default(0) @db.Float
+  mara_otc         Float  @default(0) @db.Float
+  apra_ot          Float  @default(0) @db.Float
+  apra_otc         Float  @default(0) @db.Float
+  maya_ot          Float  @default(0) @db.Float
+  maya_otc         Float  @default(0) @db.Float
+  juna_ot          Float  @default(0) @db.Float
+  juna_otc         Float  @default(0) @db.Float
+  jula_ot          Float  @default(0) @db.Float
+  jula_otc         Float  @default(0) @db.Float
+  auga_ot          Float  @default(0) @db.Float
+  auga_otc         Float  @default(0) @db.Float
+  sepa_ot          Float  @default(0) @db.Float
+  sepa_otc         Float  @default(0) @db.Float
+  octa_ot          Float  @default(0) @db.Float
+  octa_otc         Float  @default(0) @db.Float
+  nova_ot          Float  @default(0) @db.Float
+  nova_otc         Float  @default(0) @db.Float
+  deca_ot          Float  @default(0) @db.Float
+  deca_otc         Float  @default(0) @db.Float
+  jan_pa           Float  @default(0) @db.Float
+  feb_pa           Float  @default(0) @db.Float
+  mar_pa           Float  @default(0) @db.Float
+  apr_pa           Float  @default(0) @db.Float
+  may_pa           Float  @default(0) @db.Float
+  jun_pa           Float  @default(0) @db.Float
+  jul_pa           Float  @default(0) @db.Float
+  aug_pa           Float  @default(0) @db.Float
+  sep_pa           Float  @default(0) @db.Float
+  oct_pa           Float  @default(0) @db.Float
+  nov_pa           Float  @default(0) @db.Float
+  dec_pa           Float  @default(0) @db.Float
+  jana_dt          Float  @default(0) @db.Float
+  jana_dtc         Float  @default(0) @db.Float
+  feba_dt          Float  @default(0) @db.Float
+  feba_dtc         Float  @default(0) @db.Float
+  mara_dt          Float  @default(0) @db.Float
+  mara_dtc         Float  @default(0) @db.Float
+  apra_dt          Float  @default(0) @db.Float
+  apra_dtc         Float  @default(0) @db.Float
+  maya_dt          Float  @default(0) @db.Float
+  maya_dtc         Float  @default(0) @db.Float
+  juna_dt          Float  @default(0) @db.Float
+  juna_dtc         Float  @default(0) @db.Float
+  jula_dt          Float  @default(0) @db.Float
+  jula_dtc         Float  @default(0) @db.Float
+  auga_dt          Float  @default(0) @db.Float
+  auga_dtc         Float  @default(0) @db.Float
+  sepa_dt          Float  @default(0) @db.Float
+  sepa_dtc         Float  @default(0) @db.Float
+  octa_dt          Float  @default(0) @db.Float
+  octa_dtc         Float  @default(0) @db.Float
+  nova_dt          Float  @default(0) @db.Float
+  nova_dtc         Float  @default(0) @db.Float
+  deca_dt          Float  @default(0) @db.Float
+  deca_dtc         Float  @default(0) @db.Float
+  remarks_q1       String @db.Text
+  remarks_q2       String @db.Text
+  remarks_q3       String @db.Text
+  remarks_q4       String @db.Text
+}
+
+model remarks {
+  id           Int    @id @default(autoincrement())
+  mfo_id       Int
+  remarks      String @db.Text
+  date_created String @db.VarChar(20)
+  user         Int
+}
+
+model tbl_municipal {
+  municipal_id   Int    @id
+  municipal_name String @db.VarChar(50)
+  province_id    Int
+  District       Int
+
+  @@index([province_id], map: "province_id")
+}
+
+model tbl_province {
+  province_id   Int    @id
+  province_name String @db.VarChar(50)
+
+  @@index([province_name], map: "province_name")
+  @@index([province_name], map: "province_name_2")
+}
+
+model users {
+  user_id    Int       @id @default(autoincrement())
+  program_id Int?
+  username   String    @unique(map: "username") @db.VarChar(50)
+  password   String    @db.VarChar(200)
+  office     String?   @db.VarChar(100)
+  first_name String?   @db.VarChar(50)
+  last_name  String?   @db.VarChar(50)
+  created    DateTime? @db.Date
+  email      String?   @db.VarChar(50)
+  image      String?   @db.VarChar(100)
+  type       Int?
+  budget     Int?
+  verified   Int       @default(0) @db.TinyInt
+  role       Int       @default(1)
+  canEdit    Int       @default(0) @db.TinyInt
+  status     Int       @default(0) @db.TinyInt
+  status_a   Int       @default(0) @db.TinyInt
+
+  @@index([program_id], map: "program_id")
+}
