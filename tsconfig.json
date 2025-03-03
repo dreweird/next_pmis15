@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/LoginSession.jsx", "app/components/Navbar.jsx", "app/encoder/accomplishment/bed2/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/LoginSession.jsx", "app/components/Navbar.jsx", "app/encoder/accomplishment/bed2/page.jsx", "app/encoder/accomplishment/byDistrict/page.jsx"],
   "exclude": ["node_modules"]
 }

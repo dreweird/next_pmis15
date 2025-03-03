@@ -2,11 +2,6 @@ import LoginForm from "../components/LoginForm";
 import React from "react";
 
 const SignIn = () => {
-  const metaInfo = {
-    title: "Sign in | PMIS",
-    metaKeywords: "pmis",
-    metaDesc: "pmis"
-  };
   return (
 
     <div className="w-full max-w-md m-auto bg-slate-100 rounded-lg border border-primaryBorder shadow-default py-10 px-16 mt-10">

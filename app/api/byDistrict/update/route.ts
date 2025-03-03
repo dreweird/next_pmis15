@@ -1,5 +1,4 @@
 import { db } from "../../../db";
-import { auth } from "../../../auth";
 import { NextRequest } from "next/server";
 import { Prisma } from "@prisma/client";
 

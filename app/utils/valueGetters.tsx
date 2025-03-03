@@ -1,4 +1,23 @@
-import React from 'react'
+import { ColDef } from 'ag-grid-community';
+import React, { useMemo } from 'react'
+
+//// BY DISTRICT
+export function total_byDistrict(params: any) {
+  if (!params.node.group) {
+    return create_total(params.data.jan, params.data.feb, params.data.mar, params.data.apr, params.data.may, params.data.jun, params.data.jul, params.data.aug, params.data.sep, params.data.oct, params.data.nov, params.data.dece)    
+  }
+};
+
+export function percentage_byDistrict(params: any) {
+  if (!params.node.group) {
+    return create_percentage(
+      params.getValue('grandtotal_district'),
+      params.data.target
+    );
+  }
+}
+
+//// FINANCIAL OBLIGATION
 
 export function total_janft(params: any) {
     if (!params.node.group) {
@@ -208,21 +227,7 @@ export function total_q1_mooe_ft(params: any) {
     }
   }
 
-  export function total_mooe_ft_midyear(params: any) {
-    if (!params.node.group) {
-      return create_totalAB(
-        params.getValue('q1ft'), params.getValue('q2ft')
-      );
-    }
-  }
 
-  export function total_co_ft_midyear(params: any) {
-    if (!params.node.group) {
-      return create_totalAB(
-        params.getValue('q1ft_co'), params.getValue('q2ft_co')
-      );
-    }
-  }
   export function grandtotal_ft(params: any) {
     if (!params.node.group) {
       return create_totalABCD(
@@ -231,13 +236,6 @@ export function total_q1_mooe_ft(params: any) {
     }
   }
 
-//   export function grandtotal_ft_midyear(params: any) {
-//     if (!params.node.group) {
-//       return create_totalABC(
-//         params.getValue('q1_tot'), params.getValue('q2_tot')
-//       );
-//     }
-//   }
   
 export function create_totalAB(a: number,b: number){
     return {
@@ -1614,6 +1612,30 @@ export function SimpleCellRenderer(props: { node: { group: any; }; data: { area:
     }else {
       return <span> {props.value} </span>
     }
-  }
+}
+
+export function autoGroupColumnDef(){
+  const autoGroupColumnDef: ColDef = useMemo(() => {
+    return {
+      headerName: 'MFOs/PAPs',
+      pinned: 'left',
+      width: 350,
+      resizable: true,
+      field: "name",
+      cellRenderer: "agGroupCellRenderer",
+      cellRendererParams: {
+          suppressCount: true,
+          innerRenderer: SimpleCellRenderer,
+          //checkbox: false,
+      },
+      cellClass: ['data'],
+      cellClassRules: {"bold": params => params.node.group ? true : false}         
+      };
+  }, []);
+  return autoGroupColumnDef;
+
+}
+
+
 
 

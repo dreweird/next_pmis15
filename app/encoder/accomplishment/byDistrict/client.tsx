@@ -6,15 +6,19 @@ import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowS
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
-import { TrashIcon } from '@heroicons/react/16/solid';
-import { updateDataDistrict } from '@/app/actions/updateData';
+import { updateDataDistrict, updateDataMFOfromDistrict } from '@/app/actions/updateData';
+import * as custom from '../../../utils/valueGetters';
 
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
 LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_key_{AG-076337}_is_granted_for_evaluation_only___Use_in_production_is_not_permitted___Please_report_misuse_to_legal@ag-grid.com___For_help_with_purchasing_a_production_key_please_contact_info@ag-grid.com___You_are_granted_a_{Single_Application}_Developer_License_for_one_application_only___All_Front-End_JavaScript_developers_working_on_the_application_would_need_to_be_licensed___This_key_will_deactivate_on_{14 March 2025}____[v3]_[0102]_MTc0MTkxMDQwMDAwMA==f7c8723db6b2e4c55a843f86bf24e52d");
- 
-const page = () => {
+
+interface byDistrictPageProps {
+    locked: any;
+  }
+
+const ClientComponent: React.FC<byDistrictPageProps> = ({ locked }) => {
 
     const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState<any[]>([]);
@@ -27,52 +31,31 @@ const page = () => {
     }, []);
 
         const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
+          { field: 'mfo_id',  hide: true},
           { field: 'name',  rowGroup: true, hide: true},
           { field: 'province',  rowGroup: true, hide: true},
-          {headerName: "Target", field: 'target', minWidth: 50, editable: true},
-          {headerName: "Cost", field: 'cost', minWidth: 50, editable: true},
-          {headerName: "Groups", field: 'groups', minWidth: 100, editable: true},
-          {headerName:"Actions", field: "Actions",minWidth: 100, editable: true, 
-            cellRenderer: (params: any) => {
-              if (params.node.group) return;
-            return (
-              <div className="flex items-start">
-            <TrashIcon onClick={() => handleDeleteData(params.data.id)}
-                  className="h-6 w-6 cursor-pointer mx-4 text-red-500 shadow hover:shadow-md mr-1 mb-1 ease-linear transition-all duration-150"
-                  />
-            
-              </div>
-              );
-                
-              },
-            },
-        
+          {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
+          {headerName: "Jan", field: 'jan', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[0].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Feb", field: 'feb', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[1].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Mar", field: 'mar', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[2].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Apr", field: 'apr', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[3].locked == 1}, aggFunc: 'sum',},
+          {headerName: "May", field: 'may', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[4].locked == 1}, aggFunc: 'sum',},
+
+          {headerName: "Jun", field: 'jun', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[5].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Jul", field: 'jul', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[6].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Aug", field: 'aug', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[7].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Sep", field: 'sep', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[8].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Oct", field: 'oct', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[9].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Nov", field: 'nov', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[10].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Dec", field: 'dece', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[11].locked == 1}, aggFunc: 'sum',},
+          {headerName: "Total", field: 'total',   valueGetter: custom.total_byDistrict, 
+            aggFunc: custom.TotalYearAggFunc, valueFormatter: custom.currencyFormatter, colId: 'grandtotal_district'},
+          {headerName: "Accomplishment Rate",    aggFunc: custom.TotalpercentAggFunc,
+                    valueGetter: custom.percentage_byDistrict,
+                    valueFormatter: custom.currencyFormatter},
+   
         ]);
-
-        const handleDeleteData = async (id: any) => {
-          const result = window.confirm("Are you sure you want to delete the data?");
-         if(result){
-          const response = await fetch("/api/byDistrict/delete", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id }),
-          });
-          const json = await response.json();
-          if(!json.success){
-            alert("Something went wrong!")
-          }else{
-            alert("delete was successful!")
-            if (gridRef.current) {
-              var selectedRowData = gridRef.current.api.getSelectedRows();
-              gridRef.current.api.applyTransaction({ remove: selectedRowData });
-            }
-          }
-         }
-        }
-
-        
+  
         const getRowClass = (params: { node: { group: any; }; }) => {
             if (params.node.group) {
                 return 'group-header';
@@ -100,13 +83,15 @@ const page = () => {
             cellRenderer: "agGroupCellRenderer",
             cellRendererParams: {
                 suppressCount: true,
-            }
+            },
+            cellClassRules: {"bold": params => params.node.group ? true : false}  
         };
         }, []);
 
       const onCellValueChanged = async (event: any) => {
         const res = updateDataDistrict(event.data.id, event.colDef.field, event.newValue);
-        if(await res){
+        const res2 = updateDataMFOfromDistrict(event.data.mfo_id, event.colDef.field, event.newValue);
+        if(await res2 && await res){
           alert('Data was succesfully updated!');
         }
       };
@@ -120,9 +105,13 @@ const page = () => {
                 enableClickSelection: true,
               };
             }, []);
+  const syncToTable = () => {
+
+  }
   
   return (
     <div style={{ height: 700, width: '100%' }}>
+    <button onClick={syncToTable} className="bg-teal-800 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded print:hidden">Sync to BED 2</button> 
     <AgGridReact  theme={themeBalham}
              ref={gridRef} // Ref for accessing Grid's API
               getRowId={getRowId}
@@ -146,4 +135,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ClientComponent

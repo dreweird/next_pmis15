@@ -2,11 +2,17 @@
 import React from "react";
 import AuthButton from "./AuthButton";
 import { loginWithCreds } from "../actions/auth";
+import { useActionState } from 'react'
+
+const initialState = {
+  message: '',
+}
 
 const LoginForm = () => {
+  const [state, formAction, pending] = useActionState(loginWithCreds, initialState)
   return (
     <div>
-      <form action={loginWithCreds} className="w-full flex flex-col">
+      <form action={formAction} className="w-full flex flex-col">
         <div>
           <label className="block text-sm font-medium text-gray-200">
             Username
@@ -33,6 +39,7 @@ const LoginForm = () => {
         </div>
         <div className="mt-4">
           <AuthButton />
+          <p aria-live="polite" className="text-red-700 p-2">{state?.message}</p>
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 import { db } from "../../../db";
 import { auth } from "../../../auth";
 
-export  async function GET(){
+export  async function GET(req: Request, { params }: {params: {id: number}}){
 
  const session = await auth();
 
@@ -10,14 +10,14 @@ export  async function GET(){
       status: 401,
     })
   }
+  const id = (await params).id;
+
   try {
-    const user_id = Number(session?.user?.id);
-    const result = await db.users.findUnique({
-        where: {
-          user_id
-        },
-    
-      })
+    const result = await db.$queryRaw`
+        SELECT * FROM mfo
+            LEFT JOIN users ON mfo.user_id = users.user_id
+            WHERE mfo.user_id =  ${id}
+     `
     return Response.json({ result })
   } catch (error) {
     return new Response(`Webhook error: ${(error as Error).message}`, {
@@ -25,4 +25,5 @@ export  async function GET(){
     })
    // res.status(403).json({success: false });
   }
+
 }

@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.bold {
+    font-weight: bold;
+}

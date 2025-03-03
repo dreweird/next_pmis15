@@ -1,9 +1,7 @@
 import { db } from "../../../db";
-import { auth } from "../../../auth";
 
 export  async function GET(){
 
- const session = await auth();
 
   try {
     const result = await db.locked.findMany({});

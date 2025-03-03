@@ -9,9 +9,13 @@ const Navbar = async () => {
         <Link className="font-bold px-4 " href="/">
           Home
         </Link>
-        {session?.user &&    <div className="flex items-center gap-x-5">
+        {session?.user && session?.user.email !== 7 &&   <div className="flex items-center gap-x-5">
           <Link href="/encoder/targets">Targets</Link>
           <Link href="/encoder/accomplishment">Accomplishment</Link>
+        </div>}
+
+        {session?.user && session?.user.email === 7 &&   <div className="flex items-center gap-x-5">
+          <Link href="/budget">Budget</Link>
         </div>}
      
 

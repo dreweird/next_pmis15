@@ -1,13 +1,9 @@
-
 import React from 'react'
 
-export default async function Encoder({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>){
-
-  return null;
-  
+const page = () => {
+  return (
+    <div></div>
+  )
 }
 
+export default page

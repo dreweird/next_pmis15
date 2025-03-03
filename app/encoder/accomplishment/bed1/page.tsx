@@ -407,25 +407,6 @@ const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() =>
     };
   }, []);
 
-const autoGroupColumnDef: ColDef = useMemo(() => {
-          return {
-                headerName: 'MFOs/PAPs',
-                pinned: 'left',
-                width: 350,
-                resizable: true,
-                field: "name",
-                cellRenderer: "agGroupCellRenderer",
-                cellRendererParams: {
-                    suppressCount: true,
-                    innerRenderer: custom.SimpleCellRenderer,
-                    //checkbox: false,
-                },
-                cellClass: ['data'],
-          
-                
-            };
-        }, []);
-
 
   return (
      <div style={{ height: 700, width: '100%' }}>
@@ -444,8 +425,7 @@ const autoGroupColumnDef: ColDef = useMemo(() => {
                rowSelection={rowSelection}
                getRowClass={getRowClass}
               // onCellValueChanged={onCellValueChanged}
-               autoGroupColumnDef={autoGroupColumnDef}
- 
+               autoGroupColumnDef={custom.autoGroupColumnDef()}
                showOpenedGroup={true}
               suppressGroupRowsSticky={true}
               groupHideParentOfSingleChild ={true} 

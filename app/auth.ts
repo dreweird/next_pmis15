@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import Github from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -28,7 +27,7 @@ export const {
           return null;
         }
         const username = credentials.username as string;
-        let user: any = await db.users.findUnique({
+        const user: any = await db.users.findUnique({
           where: {
             username,
           },

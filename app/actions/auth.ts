@@ -15,7 +15,7 @@ export const logout = async () => {
   revalidatePath("/");
 };
 
-export const loginWithCreds = async (formData: FormData): Promise<any> => {
+export const loginWithCreds = async (prevState: any, formData: FormData)  => {
   const rawFormData = {
     username: formData.get("username"),
     password: formData.get("password"),
@@ -24,17 +24,19 @@ export const loginWithCreds = async (formData: FormData): Promise<any> => {
   };
   try {
     await signIn("credentials", rawFormData);
+    
   } catch (error: any) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+        case "CallbackRouteError":
+          return { message: "Invalid credentials!" };
         default:
-          return { error: "Something went wrong!" };
+          return { message: "Something went wrong!" };
       }
     }
 
     throw error;
   }
   revalidatePath("/");
+  return { message: "Login successful" };
 };

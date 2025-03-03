@@ -11,13 +11,13 @@ export  async function GET(){
     })
   }
   try {
-    const user_id = Number(session?.user?.id);
-    const result = await db.users.findUnique({
+    const result = await db.users.findMany({
         where: {
-          user_id
-        },
-    
-      })
+          office: {
+            not: ""
+          }
+        }
+      });
     return Response.json({ result })
   } catch (error) {
     return new Response(`Webhook error: ${(error as Error).message}`, {

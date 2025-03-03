@@ -7,6 +7,7 @@ import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../../../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
+import { updateData } from '@/app/actions/updateData';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -64,21 +65,21 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ locked }) => {
     },
     {headerName: "BED 2 - Physical Accomplishment", marryChildren: true,
       children: [
-          {headerName: "Jan", field: "jan_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => { if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[0].locked == 0}},
-          {headerName: "Feb", field: "feb_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[1].locked == 0}},
-          {headerName: "Mar", field: "mar_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[2].locked == 0}},
+          {headerName: "Jan", field: "jan_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => { if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[0].locked == 1}},
+          {headerName: "Feb", field: "feb_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[1].locked == 1}},
+          {headerName: "Mar", field: "mar_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[2].locked == 1}},
           {headerName: "Q1",  type: 'quarterColumn2', valueGetter: custom.Q1_PhysicalA,  colId: 'Q1_pa', cellClass: ['data', 'a']},
-          {headerName: "Apr", field: "apr_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[3].locked == 0;}},
-          {headerName: "May", field: "may_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[4].locked == 0;}},
-          {headerName: "Jun", field: "jun_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[5].locked == 0;}},
+          {headerName: "Apr", field: "apr_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[3].locked == 1;}},
+          {headerName: "May", field: "may_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[4].locked == 1;}},
+          {headerName: "Jun", field: "jun_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[5].locked == 1;}},
           {headerName: "Q2", type: 'quarterColumn2', valueGetter: custom.Q2_PhysicalA,  colId: 'Q2_pa', cellClass: ['data', 'a']},
-          {headerName: "Jul", field: "jul_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[6].locked == 0;}},
-          {headerName: "Aug", field: "aug_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[7].locked == 0;}},
-          {headerName: "Sep", field: "sep_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[8].locked == 0;}},
+          {headerName: "Jul", field: "jul_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[6].locked == 1;}},
+          {headerName: "Aug", field: "aug_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[7].locked == 1;}},
+          {headerName: "Sep", field: "sep_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[8].locked == 1;}},
           {headerName: "Q3", type: 'quarterColumn2', valueGetter: custom.Q3_PhysicalA,  colId: 'Q3_pa', cellClass: ['data', 'a']},
-          {headerName: "Oct", field: "oct_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[9].locked == 0;}},
-          {headerName: "Nov", field: "nov_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[10].locked == 0;}},
-          {headerName: "Dec", field: "dec_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.canEdit !== 0 && params.data.area == 0 && locked[11].locked == 0;}},
+          {headerName: "Oct", field: "oct_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[9].locked == 1;}},
+          {headerName: "Nov", field: "nov_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[10].locked == 1;}},
+          {headerName: "Dec", field: "dec_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[11].locked == 1;}},
           {headerName: "Q4", type: 'quarterColumn2', valueGetter: custom.Q4_PhysicalA,  colId: 'Q4_pa', cellClass: ['data', 'a']},
           { headerName: 'TOTAL', type: 'numericColumn',  colId: 'PA', valueGetter: custom.GrandTotal_PhysicalA, width: 110,  cellClass: ['data', 'total'],
             cellStyle: params => {
@@ -245,25 +246,12 @@ const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() =>
     };
   }, []);
 
-const autoGroupColumnDef: ColDef = useMemo(() => {
-          return {
-                headerName: 'MFOs/PAPs',
-                pinned: 'left',
-                width: 350,
-                resizable: true,
-                field: "name",
-                cellRenderer: "agGroupCellRenderer",
-                cellRendererParams: {
-                    suppressCount: true,
-                    innerRenderer: custom.SimpleCellRenderer,
-                    //checkbox: false,
-                },
-                cellClass: ['data'],
-          
-                
-            };
-        }, []);
-
+    const onCellValueChanged = async (event: any) => {
+      const res = updateData(event.data.id, event.colDef.field, event.newValue);
+      if(await res){
+        alert('Data was succesfully updated!');
+      }
+    };
 
   return (
      <div style={{ height: 700, width: '100%' }}>
@@ -282,8 +270,8 @@ const autoGroupColumnDef: ColDef = useMemo(() => {
  
         rowSelection={rowSelection}
         getRowClass={getRowClass}
-       // onCellValueChanged={onCellValueChanged}
-        autoGroupColumnDef={autoGroupColumnDef}
+        onCellValueChanged={onCellValueChanged}
+        autoGroupColumnDef={custom.autoGroupColumnDef()}
 
         showOpenedGroup={true}
        suppressGroupRowsSticky={true}
