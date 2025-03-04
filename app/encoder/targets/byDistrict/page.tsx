@@ -8,6 +8,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { TrashIcon } from '@heroicons/react/16/solid';
 import { updateDataDistrict } from '@/app/actions/updateData';
+import * as custom from '../../../utils/valueGetters';
 
 
 
@@ -29,8 +30,8 @@ const page = () => {
         const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
           { field: 'name',  rowGroup: true, hide: true},
           { field: 'province',  rowGroup: true, hide: true},
-          {headerName: "Target", field: 'target', minWidth: 50, editable: true},
-          {headerName: "Cost", field: 'cost', minWidth: 50, editable: true},
+          {headerName: "Target", field: 'target', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
+          {headerName: "Cost", field: 'cost', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
           {headerName: "Groups", field: 'groups', minWidth: 100, editable: true},
           {headerName:"Actions", field: "Actions",minWidth: 100, editable: true, 
             cellRenderer: (params: any) => {

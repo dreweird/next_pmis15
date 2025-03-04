@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
-import * as custom from '../../../utils/valueGetters';
+import * as custom from '../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
-import { updateData } from '@/app/actions/updateData';
+import { useSession } from 'next-auth/react'
+import { updateData } from '../actions/updateData';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -15,21 +16,25 @@ ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, Ro
 LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_key_{AG-076337}_is_granted_for_evaluation_only___Use_in_production_is_not_permitted___Please_report_misuse_to_legal@ag-grid.com___For_help_with_purchasing_a_production_key_please_contact_info@ag-grid.com___You_are_granted_a_{Single_Application}_Developer_License_for_one_application_only___All_Front-End_JavaScript_developers_working_on_the_application_would_need_to_be_licensed___This_key_will_deactivate_on_{14 March 2025}____[v3]_[0102]_MTc0MTkxMDQwMDAwMA==f7c8723db6b2e4c55a843f86bf24e52d");
 
 
-interface ClientComponentProps {
+interface ResultComponentProps {
+  selectedValue: string;
   locked: any;
 }
 
-const ClientComponent: React.FC<ClientComponentProps> = ({ locked }) => {
+const Bed2Component: React.FC<ResultComponentProps> = ({ selectedValue, locked }) => {
 
-   const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
-  const [rowData, setRowData] = useState<any[]>([]);
+    const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
+    const [rowData, setRowData] = useState<any[]>([]);
+    const { data: session } = useSession()
+    const type: number = Number(session?.user?.email); // Only Encoder Account can update the physical accomplishment
 
-  useEffect(() => {
-    fetch("/api/mfo/list") // Fetch data from server
-      .then((result) => result.json() ) // Convert to JSON
-      .then((rowData) => setRowData(rowData.result)); // Update state of `rowData`
-     
-  }, []);
+    useEffect(() => {
+      let id = Number(selectedValue) 
+      fetch(`/api/mfo/${id}`) // Fetch data from server
+        .then((result) => result.json()) // Convert to JSON
+        .then((rowData) => {setRowData(rowData.result)}); // Update state of `rowData`
+   
+    }, [selectedValue]);
 
   const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
 
@@ -65,7 +70,7 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ locked }) => {
     },
     {headerName: "BED 2 - Physical Accomplishment", marryChildren: true,
       children: [
-          {headerName: "Jan", field: "jan_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => { if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[0].locked == 1}},
+          {headerName: "Jan", field: "jan_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[0].locked == 1}},
           {headerName: "Feb", field: "feb_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[1].locked == 1}},
           {headerName: "Mar", field: "mar_pa", columnGroupShow: "open",type: 'valueColumn', cellClass: ['data'],  editable: params => {  if (params.node.group) return false;return params.data.status == 2 && params.data.area == 0 && locked[2].locked == 1}},
           {headerName: "Q1",  type: 'quarterColumn2', valueGetter: custom.Q1_PhysicalA,  colId: 'Q1_pa', cellClass: ['data', 'a']},
@@ -191,18 +196,18 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ locked }) => {
   }
   ]);
 
-const getRowClass = (params: { node: { group: any; }; }) => {
-      if (params.node.group) {
-          return 'group-header';
-      }
-  };
-  
-const defaultColDef = useMemo(() => {
-  return {
-    sortable: true, resizable: true, filter: true
-  };
-}, []);
-
+        const getRowClass = (params: { node: { group: any; }; }) => {
+          if (params.node.group) {
+              return 'group-header';
+          }
+      };
+      
+      const defaultColDef = useMemo(() => {
+        return {
+          sortable: true, resizable: true, filter: true
+        };
+      }, []);
+      
 // Define column types
 const columnTypes = useMemo(() => { 
     return {
@@ -236,54 +241,66 @@ const columnTypes = useMemo(() => {
     },
     };
 }, []);
+      
+      const getRowId = (params: { data: { mfo_id: any; }; }) => params.data.mfo_id.toString();
+      const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() => {
+          return {
+            mode: "singleRow",
+            checkboxes: false,
+            enableClickSelection: true,
+          };
+        }, []);
+      
+      const autoGroupColumnDef: ColDef = useMemo(() => {
+        return {
+          headerName: 'MFOs/PAPs',
+          pinned: 'left',
+          width: 350,
+          resizable: true,
+          field: "name",
+          cellRenderer: "agGroupCellRenderer",
+          cellRendererParams: {
+              suppressCount: true,
+              innerRenderer: custom.SimpleCellRenderer,
+              //checkbox: false,
+          },
+          cellClass: ['data'],
+          cellClassRules: {"bold": params => params.node.group ? true : false}         
+          };
+      }, []);
 
-const getRowId = (params: { data: { mfo_id: any; }; }) => params.data.mfo_id.toString();
-const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() => {
-    return {
-      mode: "singleRow",
-      checkboxes: false,
-      enableClickSelection: true,
-    };
-  }, []);
-
-    const onCellValueChanged = async (event: any) => {
-      const res = updateData(event.data.id, event.colDef.field, event.newValue);
-      if(await res){
-        alert('Data was succesfully updated!');
-      }
-    };
+      const onCellValueChanged = async (event: any) => {
+            const res = updateData(event.data.mfo_id, event.colDef.field, event.newValue);
+            if(await res){
+              alert('Data was succesfully updated!');
+            }
+        
+      };
 
   return (
-     <div style={{ height: 700, width: '100%' }}>
-      <span className='text-base font-medium'>BED 2 (Physical) </span>
-      {rowData  ? (
-       <AgGridReact  theme={themeBalham}
-       ref={gridRef} // Ref for accessing Grid's API
-        getRowId={getRowId}
-        rowData={rowData} // Row Data for Rows
-        columnDefs={colDefs} // Column Defs for Columns
-        defaultColDef={defaultColDef} // Default Column Properties
-        animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-        groupDefaultExpanded = {-1}
-        columnTypes={columnTypes}
-        suppressAggFuncInHeader={true}
- 
-        rowSelection={rowSelection}
-        getRowClass={getRowClass}
-        onCellValueChanged={onCellValueChanged}
-        autoGroupColumnDef={custom.autoGroupColumnDef()}
+      <div style={{ height: 700, width: '100%' }}>
+             <AgGridReact  theme={themeBalham}
+                      ref={gridRef} // Ref for accessing Grid's API
+                       getRowId={getRowId}
+                       rowData={rowData} // Row Data for Rows
+                       columnDefs={colDefs} // Column Defs for Columns
+                       defaultColDef={defaultColDef} // Default Column Properties
+                       animateRows={true} // Optional - set to 'true' to have rows animate when sorted
+                       groupDefaultExpanded = {-1}
+                       columnTypes={columnTypes}
+                       suppressAggFuncInHeader={true}
+                
+                       rowSelection={rowSelection}
+                       getRowClass={getRowClass}
+                       onCellValueChanged={onCellValueChanged}
+                       autoGroupColumnDef={autoGroupColumnDef}
+         
+                       showOpenedGroup={true}
+                      suppressGroupRowsSticky={true}
+                      groupHideParentOfSingleChild ={true} 
+             />
+             </div>
+  );
+};
 
-        showOpenedGroup={true}
-       suppressGroupRowsSticky={true}
-       groupHideParentOfSingleChild ={true} 
-/>
-      ) : (
-        <div>Loading data...</div>
-      )}
-  
-     </div>
-  )
-}
-
-export default ClientComponent
-
+export default Bed2Component;

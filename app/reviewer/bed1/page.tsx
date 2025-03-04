@@ -1,10 +1,10 @@
 "use client";
 
 import Bed1Component from '@/app/components/Bed1Table';
+import SelectOffice from '@/app/components/SelectOffice'
 import React, { useState } from 'react'
-import SelectOfficeBudget from '../components/SelectOfficeBudget';
 
-const budgetPage = () => {
+const bed1 = () => {
 
   const [selectedValue, setSelectedValue] = useState('');
 
@@ -14,10 +14,10 @@ const budgetPage = () => {
   
   return (
     <div>
-        <SelectOfficeBudget onSelect={handleSelect} />
+        <SelectOffice onSelect={handleSelect} />
         <Bed1Component selectedValue={selectedValue} />
     </div>
   )
 }
 
-export default budgetPage
+export default bed1
