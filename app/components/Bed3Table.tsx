@@ -8,6 +8,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import * as custom from '../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { useSession } from 'next-auth/react'
+import { updateData } from '../actions/updateData';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -460,6 +461,14 @@ const columnTypes = useMemo(() => {
           };
       }, []);
 
+    const onCellValueChanged = async (event: any) => {
+          const res = updateData(event.data.mfo_id, event.colDef.field, event.newValue);
+          if(await res){
+            alert('Data was succesfully updated!');
+          }
+      
+    };
+
   return (
       <div style={{ height: 700, width: '100%' }}>
              <AgGridReact  theme={themeBalham}
@@ -475,7 +484,7 @@ const columnTypes = useMemo(() => {
                 
                        rowSelection={rowSelection}
                        getRowClass={getRowClass}
-                    //   onCellValueChanged={onCellValueChanged}
+                       onCellValueChanged={onCellValueChanged}
                        autoGroupColumnDef={autoGroupColumnDef}
          
                        showOpenedGroup={true}

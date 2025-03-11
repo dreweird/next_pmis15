@@ -7,7 +7,8 @@ export default async function Bed2Page(){
   const session = await auth();
   const id = session && session.user ? session.user.id : null;
   const selectedValue = id?.toString() || '';
-  const data = await fetch('http://localhost:3000/api/mfo/locked')
+  const URL = process.env.NEXT_PUBLIC_API_URL
+  const data = await fetch(`${URL}/api/mfo/locked`)
   const posts = await data.json()
   const editableMonth = posts.result.filter(x => x.locked === 1);
   return <div> Editable Month:  {editableMonth.map(x => {

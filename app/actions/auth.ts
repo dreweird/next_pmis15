@@ -20,6 +20,7 @@ export const loginWithCreds = async (prevState: any, formData: FormData)  => {
     username: formData.get("username"),
     password: formData.get("password"),
    // role: "ADMIN",
+    redirect: true,
     redirectTo: "/",
   };
   try {
@@ -28,10 +29,10 @@ export const loginWithCreds = async (prevState: any, formData: FormData)  => {
   } catch (error: any) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case "CallbackRouteError":
+        case "CredentialsSignin":
           return { message: "Invalid credentials!" };
         default:
-          return { message: "Something went wrong!" };
+          return { message: "Invalid credentials!" };
       }
     }
 

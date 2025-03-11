@@ -1,15 +1,23 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthError } from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "./db";
+
+export class InvalidLoginError extends AuthError {
+  constructor(msg: string) {
+    super();
+    this.message = msg;
+    this.stack = undefined;
+  }
+}
 
 export const {
   handlers: { GET, POST },
   signIn,
   signOut,
   auth,
-} = NextAuth({
+} = NextAuth({  
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   providers: [
@@ -34,14 +42,14 @@ export const {
         });
 
         if (!user) {
-          throw new Error("Incorrect username or password.");
+          throw new InvalidLoginError("Invalid Credentials")
         } else {
           const isMatch = bcrypt.compareSync(
             credentials.password as string,
             user.password
           );
           if (!isMatch) {
-            throw new Error("Incorrect username or password.");
+            throw new InvalidLoginError("Invalid Credentials")
           }
         }
         return { id: user.user_id, email: user.type, name: user.username }
