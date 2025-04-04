@@ -1,4 +1,6 @@
-import { ColDef } from 'ag-grid-community';
+"use client";
+
+import { ColDef, ExcelStyle } from 'ag-grid-community';
 import React, { useMemo } from 'react'
 
 //// BY DISTRICT
@@ -1414,116 +1416,122 @@ export function adjusted_disbursement_view(params: any) {
 
 ///////// EXCEL STYLES
 
- export var excelStyles = [
-  { id: 'indent1', alignment: { indent: 1 }, dataType: 'string' },
-  { id: 'indent2', alignment: { indent: 2 }, dataType: 'string' },
-  { id: 'indent3', alignment: { indent: 3 }, dataType: 'string' },
-  { id: 'indent4', alignment: { indent: 4 }, dataType: 'string' },
-  { id: 'indent5', alignment: { indent: 5 }, dataType: 'string' },
-  { id: 'bold', font: { bold: true } },
-  {
-    id: 'data',
-    font: { size: 11, fontName: 'Calibri' },
-    borders: {
-      borderBottom: {
-        color: '#000000',
-        lineStyle: 'Continuous',
-        weight: 1
-      },
-      borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
-    }
-  },
-  {
-    id: 't',
-    interior: { color: '#fae091', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' }
-  },
-  {
-    id: 'a',
-    interior: { color: '#a2dde5', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' }
-  },
-  {
-    id: 'v',
-    interior: { color: '#ec9fa7', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' }
-  },
-  {
-    id: 'month',
-    interior: { color: '#e6f403', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' },
-    borders: {
-      borderBottom: {
-        color: '#000000',
-        lineStyle: 'Continuous',
-        weight: 1
-      },
-      borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
-    }
-  },
-  {
-    id: 'quarter',
-    interior: { color: '#edbae5', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' },
-    borders: {
-      borderBottom: {
-        color: '#000000',
-        lineStyle: 'Continuous',
-        weight: 1
-      },
-      borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
-    }
-  },
-  {
-    id: 'p1',
-    interior: { color: '#7a6f67', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' }
-  },
-  {
-    id: 'total',
-    interior: { color: '#81f7a6', pattern: 'Solid' },
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    alignment: { horizontal: 'Center' },
-    borders: {
-      borderBottom: {
-        color: '#000000',
-        lineStyle: 'Continuous',
-        weight: 1
-      },
-      borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
-    }
-  },
+export const excelStyles: ExcelStyle[] = 
+ [
+    { id: 'indent1', alignment: { indent: 1 }, dataType: 'String' },
+{ id: 'indent2', alignment: { indent: 2 }, dataType: 'String' },
+{ id: 'indent3', alignment: { indent: 3 }, dataType: 'String' },
+{ id: 'indent4', alignment: { indent: 4 }, dataType: 'String' },
+{ id: 'indent5', alignment: { indent: 5 }, dataType: 'String' },
+{ id: 'bold', font: { bold: true } },
+{
+  id: 'data',
+  font: { size: 11, fontName: 'Calibri' },
+  numberFormat: { format: '#,##0.00'},
+  borders: {
+    borderBottom: {
+      color: '#000000',
+      lineStyle: 'Continuous',
+      weight: 1
+    },
+    borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+  }
+},
+{
+  id: 't',
+  interior: { color: '#fae091', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  alignment: { horizontal: 'Center' }
+},
+{
+  id: 'a',
+  interior: { color: '#a2dde5', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  alignment: { horizontal: 'Center' }
+},
+{
+  id: 'v',
+  interior: { color: '#ec9fa7', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  alignment: { horizontal: 'Center' }
+},
+{
+  id: 'month',
+  interior: { color: '#e6f403', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  alignment: { horizontal: 'Center' },
+  numberFormat: { format: '#,##0.00'},
+  borders: {
+    borderBottom: {
+      color: '#000000',
+      lineStyle: 'Continuous',
+      weight: 1
+    },
+    borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+  }
+},
+{
+  id: 'quarter',
+  interior: { color: '#edbae5', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  numberFormat: { format: '#,##0.00'},
+  alignment: { horizontal: 'Center' },
+  borders: {
+    borderBottom: {
+      color: '#000000',
+      lineStyle: 'Continuous',
+      weight: 1
+    },
+    borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+  }
+},
+{
+  id: 'p1',
+  interior: { color: '#7a6f67', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  alignment: { horizontal: 'Center' }
+},
+{
+  id: 'total',
+  interior: { color: '#81f7a6', pattern: 'Solid' },
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  numberFormat: { format: '#,##0.00'},
+  alignment: { horizontal: 'Center' },
+  borders: {
+    borderBottom: {
+      color: '#000000',
+      lineStyle: 'Continuous',
+      weight: 1
+    },
+    borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+  }
+},
 
-  {
-    id: 'header',
-    font: { size: 11, fontName: 'Calibri', bold: true },
-    borders: {
-      borderBottom: {
-        color: '#000000',
-        lineStyle: 'Continuous',
-        weight: 1
-      },
-      borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
-      borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
-    }
-  },
-  { id: 'headappend', font: { size: 11, fontName: 'Calibri', bold: true } }
-];
+{
+  id: 'header',
+  font: { size: 11, fontName: 'Calibri', bold: true },
+  borders: {
+    borderBottom: {
+      color: '#000000',
+      lineStyle: 'Continuous',
+      weight: 1
+    },
+    borderLeft: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderRight: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+    borderTop: { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+  }
+},
+{ id: 'headappend', font: { size: 11, fontName: 'Calibri', bold: true } }
+  ];
+
 
 export function customStyleGroup(params: any){
   if(params.node.group){
