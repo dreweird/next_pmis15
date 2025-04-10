@@ -9,6 +9,7 @@ import * as custom from '../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { useSession } from 'next-auth/react'
 import { updateData } from '../actions/updateData';
+import ExportButton from './ExportButton';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -442,6 +443,7 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
 
   return (
       <div style={{ height: 700, width: '100%' }}>
+        <ExportButton gridRef={gridRef} fileName="BED1.xlsx"/>
              <AgGridReact  theme={themeBalham}
                       ref={gridRef} // Ref for accessing Grid's API
                        getRowId={getRowId}
@@ -461,6 +463,7 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
                        showOpenedGroup={true}
                       suppressGroupRowsSticky={true}
                       groupHideParentOfSingleChild ={true} 
+                       excelStyles={custom.excelStyles}
              />
              </div>
   );

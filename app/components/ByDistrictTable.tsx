@@ -9,6 +9,7 @@ import * as custom from '../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { useSession } from 'next-auth/react'
 import { updateDataDistrict, updateDataMFOfromDistrict } from '../actions/updateData';
+import ExportButton from './ExportButton';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -115,6 +116,7 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
 
   return (
       <div style={{ height: 700, width: '100%' }}>
+            <ExportButton gridRef={gridRef} fileName="ByDistrict.xlsx"/>
              <AgGridReact  theme={themeBalham}
              ref={gridRef} // Ref for accessing Grid's API
              getRowId={getRowId}
@@ -132,6 +134,7 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
 
             suppressGroupRowsSticky={true}
             groupHideParentOfSingleChild ={false}
+          
              />
              </div>
   );

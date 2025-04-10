@@ -280,7 +280,7 @@ const columnTypes = useMemo(() => {
 
   return (
       <div style={{ height: 700, width: '100%' }}>
-        <ExportButton gridRef={gridRef} />
+        <ExportButton gridRef={gridRef} fileName="BED2.xlsx"/>
              <AgGridReact  theme={themeBalham}
                       ref={gridRef} // Ref for accessing Grid's API
                        getRowId={getRowId}

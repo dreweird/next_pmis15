@@ -6,9 +6,10 @@ import { AgGridReact } from 'ag-grid-react';
 
 interface ExportButtonProps {
     gridRef: RefObject<AgGridReact | null>;
+    fileName: string; 
 }
 
-const ExportButton: React.FC<ExportButtonProps> = ({ gridRef }) => {
+const ExportButton: React.FC<ExportButtonProps> = ({ gridRef, fileName }) => {
 
         const [office, setdatauser] = useState();
 
@@ -49,7 +50,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ gridRef }) => {
             
           else return params.value;
       },
-      fileName: "BED2.xlsx",
+      fileName: fileName,
       });
 
 

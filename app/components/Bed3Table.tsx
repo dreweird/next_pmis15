@@ -8,6 +8,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import * as custom from '../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { useSession } from 'next-auth/react'
+import ExportButton from './ExportButton';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -462,6 +463,7 @@ const columnTypes = useMemo(() => {
 
   return (
       <div style={{ height: 700, width: '100%' }}>
+        <ExportButton gridRef={gridRef} fileName="BED3.xlsx"/>
              <AgGridReact  theme={themeBalham}
                       ref={gridRef} // Ref for accessing Grid's API
                        getRowId={getRowId}
@@ -481,6 +483,7 @@ const columnTypes = useMemo(() => {
                        showOpenedGroup={true}
                       suppressGroupRowsSticky={true}
                       groupHideParentOfSingleChild ={true} 
+                       excelStyles={custom.excelStyles}
              />
              </div>
   );
