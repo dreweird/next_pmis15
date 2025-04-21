@@ -7,6 +7,7 @@ import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../../../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
+import { updateData } from '@/app/actions/updateData';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -479,9 +480,15 @@ const page = () => {
           }, []);
         
         
-          const onCellValueChanged = useCallback((event: { data: { mfo_id: any; }; colDef: { field: any; }; newValue: any; }) => {
-            handleUpdateData(event.data.mfo_id, event.colDef.field, event.newValue);
-          }, []);
+
+
+      const onCellValueChanged = async (event: any) => {
+            const res = updateData(event.data.mfo_id, event.colDef.field, event.newValue);
+            if(await res){
+              alert('Data was succesfully updated!');
+            }
+        
+      };
         
           const handleUpdateData = async (mfo_id: any, col_name: any, value: any) => {
             const response = await fetch("/api/mfo/update", {
@@ -578,7 +585,7 @@ const page = () => {
        
               rowSelection={rowSelection}
               getRowClass={getRowClass}
-             // onCellValueChanged={onCellValueChanged}
+              onCellValueChanged={onCellValueChanged}
               autoGroupColumnDef={autoGroupColumnDef}
 
               showOpenedGroup={true}

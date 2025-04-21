@@ -17,7 +17,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ gridRef, fileName }) => {
 
             fetch("/api/users/retrieve")
             .then((result) => result.json()) // Convert to JSON
-            .then((rowData) => {console.log(rowData.result.office);setdatauser(rowData.result.office)}); // Update state of `rowData`
+            .then((rowData) => {setdatauser(rowData.result.office)}); // Update state of `rowData`
 
         }, []);
     
@@ -37,18 +37,12 @@ const ExportButton: React.FC<ExportButtonProps> = ({ gridRef, fileName }) => {
         shouldRowBeSkipped(params: any) {
             return params.node.group && params.node.childrenAfterGroup.length == 1;
         },
-        processCellCallback(params: any){
-        const { node } = params;
-          if (params.column.colDef.field == 'name') {
-            if (node.group) {
-              return node.key;
-            } else {
-              return params.value;
-            }
-          } else if (params.column.colDef.field == 'fu' && isNaN(params.value))
-            return '';
-            
-          else return params.value;
+  
+      processRowGroupCallback(params: any){
+        // const indentLevel = params.node.level;
+        // const indent = ' '.repeat(indentLevel * 1); // 1 space per level
+        // return indent + params.node.key;
+        return params.node.key;
       },
       fileName: fileName,
       });

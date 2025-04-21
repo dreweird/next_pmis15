@@ -368,7 +368,7 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
       
       const defaultColDef = useMemo(() => {
         return {
-          sortable: true, resizable: true, filter: true
+          sortable: true, resizable: true,  enablePivot: true,
         };
       }, []);
       

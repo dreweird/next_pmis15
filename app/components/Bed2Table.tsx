@@ -205,7 +205,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({ selectedValue, locked }
       
       const defaultColDef = useMemo(() => {
         return {
-          sortable: true, resizable: true, filter: true
+          sortable: true, resizable: true,  enablePivot: true,
         };
       }, []);
       
