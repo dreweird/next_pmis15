@@ -19,19 +19,20 @@ LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_ke
 
 interface ResultComponentProps {
   selectedValue: string;
-  locked: any;
+  prov: any;
+  dist: any;
 }
 
-const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, locked }) => {
+const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, prov, dist }) => {
 
     const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState<any[]>([]);
     const { data: session } = useSession()
-    const type: number = Number(session?.user?.email); // Only Budget Account can update the budget accomplishment
+    // const type: number = Number(session?.user?.email); // Only Budget Account can update the budget accomplishment
 
     useEffect(() => {
       let id = Number(selectedValue) 
-      fetch(`/api/byDistrict/${id}`) // Fetch data from server
+      fetch(`/api/byDistrict/${id}/${prov}/${dist}`) // Fetch data from server
         .then((result) => result.json()) // Convert to JSON
         .then((rowData) => {console.log(rowData.result);setRowData(rowData.result)}); // Update state of `rowData`
    
@@ -42,19 +43,19 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
       { field: 'name',  rowGroup: true, hide: true},
       { field: 'province',  rowGroup: true, hide: true},
       {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
-      {headerName: "Jan", field: 'jan', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[0].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Feb", field: 'feb', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[1].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Mar", field: 'mar', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[2].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Apr", field: 'apr', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[3].locked == 1}, aggFunc: 'sum',},
-      {headerName: "May", field: 'may', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[4].locked == 1}, aggFunc: 'sum',},
+      {headerName: "Jan", field: 'jan', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Feb", field: 'feb', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Mar", field: 'mar', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Apr", field: 'apr', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "May", field: 'may', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
 
-      {headerName: "Jun", field: 'jun', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[5].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Jul", field: 'jul', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[6].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Aug", field: 'aug', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[7].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Sep", field: 'sep', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[8].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Oct", field: 'oct', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[9].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Nov", field: 'nov', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[10].locked == 1}, aggFunc: 'sum',},
-      {headerName: "Dec", field: 'dece', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[11].locked == 1}, aggFunc: 'sum',},
+      {headerName: "Jun", field: 'jun', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Jul", field: 'jul', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Aug", field: 'aug', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Sep", field: 'sep', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Oct", field: 'oct', valueFormatter: custom.currencyFormatter, aggFunc: 'sum',},
+      {headerName: "Nov", field: 'nov', valueFormatter: custom.currencyFormatter,  aggFunc: 'sum',},
+      {headerName: "Dec", field: 'dece', valueFormatter: custom.currencyFormatter,  aggFunc: 'sum',},
       {headerName: "Total", field: 'total',   valueGetter: custom.total_byDistrict, 
         aggFunc: custom.TotalYearAggFunc, valueFormatter: custom.currencyFormatter, colId: 'grandtotal_district'},
       {headerName: "Accomplishment Rate",    aggFunc: custom.TotalpercentAggFunc,

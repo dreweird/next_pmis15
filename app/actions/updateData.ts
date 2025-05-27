@@ -3,7 +3,7 @@
 export async function updateData(mfo_id: number, col_name: string, value: number) {
 
     const apiURL = process.env.NEXTAUTH_URL;
-    const response = await fetch(`${apiURL}/api/mfo/update`, {
+    const response = await fetch(`https://apps.caraga.da.gov.ph/api/mfo/update`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

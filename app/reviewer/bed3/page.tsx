@@ -1,6 +1,6 @@
 "use client";
 
-import ResultComponent from '@/app/components/Bed1Table';
+import ResultComponent from '@/app/components/Bed3Table';
 import SelectOffice from '@/app/components/SelectOffice'
 import React, { useState } from 'react'
 

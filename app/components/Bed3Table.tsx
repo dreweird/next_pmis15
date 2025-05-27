@@ -186,34 +186,34 @@ const Bed3Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
             },width: 110,aggFunc: custom.TotalYearAggFunc,valueFormatter: custom.currencyFormatter}
           ]
         },
-        {
-          headerName: 'Unobligated',
-          colId: 'un',
-          width: 130,
-          cellStyle: params => {
-            if(params.node.group) { return { color: 'black', 'backgroundColor': '#f7adad', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#f7adad', 'fontWeight': 'normal' }}
-          },
-          aggFunc: custom.TotalUnobligatedAggFunc,
-          valueGetter: custom.unobligated,
-          valueFormatter: custom.currencyFormatter,
-          type: 'numericColumn',
-          cellRenderer: 'agAnimateShowChangeCellRenderer',
-          cellClass: ['data', 'v']
-        },
-        {
-          headerName: 'Percentage',
-          colId: 'fu',
-          width: 130,
-          cellStyle: params => {
-            if(params.node.group) { return { color: 'black', 'backgroundColor': '#dfa9f5', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#dfa9f5', 'fontWeight': 'normal' }}
-          },
-          aggFunc: custom.TotalpercentAggFunc,
-          valueGetter: custom.percentage,
-          valueFormatter: custom.currencyFormatter,
-          type: 'numericColumn',
-          cellRenderer: 'agAnimateShowChangeCellRenderer',
-          cellClass: ['data', 'p']
-        },
+        // {
+        //   headerName: 'Unobligated',
+        //   colId: 'un',
+        //   width: 130,
+        //   cellStyle: params => {
+        //     if(params.node.group) { return { color: 'black', 'backgroundColor': '#f7adad', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#f7adad', 'fontWeight': 'normal' }}
+        //   },
+        //   aggFunc: custom.TotalUnobligatedAggFunc,
+        //   valueGetter: custom.unobligated,
+        //   valueFormatter: custom.currencyFormatter,
+        //   type: 'numericColumn',
+        //   cellRenderer: 'agAnimateShowChangeCellRenderer',
+        //   cellClass: ['data', 'v']
+        // },
+        // {
+        //   headerName: 'Percentage',
+        //   colId: 'fu',
+        //   width: 130,
+        //   cellStyle: params => {
+        //     if(params.node.group) { return { color: 'black', 'backgroundColor': '#dfa9f5', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#dfa9f5', 'fontWeight': 'normal' }}
+        //   },
+        //   aggFunc: custom.TotalpercentAggFunc,
+        //   valueGetter: custom.percentage,
+        //   valueFormatter: custom.currencyFormatter,
+        //   type: 'numericColumn',
+        //   cellRenderer: 'agAnimateShowChangeCellRenderer',
+        //   cellClass: ['data', 'p']
+        // },
 
       ]
     },

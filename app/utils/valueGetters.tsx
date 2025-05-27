@@ -1385,7 +1385,7 @@ export function total_da_q4(params: any) {
 export function unpaidObligations(params: any) {
   if (!params.node.group) {
     return create_totalAMinusB(
-      params.getValue('grandtotal_dt'),
+      params.getValue('grandtotal_fa'),
       params.getValue('grandtotal_da')
   
     );
@@ -1396,7 +1396,7 @@ export function disbursementPercentage(params: any) {
   if (!params.node.group) {
     return create_percentage(
       params.getValue('grandtotal_da'),
-      params.getValue('grandtotal_dt')
+      params.getValue('grandtotal_fa')
      
     );
   }

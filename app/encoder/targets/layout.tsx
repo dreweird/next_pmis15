@@ -12,8 +12,8 @@ export default function BlogLayout({
       <h1 className="text-2xl font-bold">Menu</h1>
       </div>
       <ul>
-      {/* <li className="p-2 hover:bg-gray-700 text-sm"> <Link href={"/encoder/targets/addMfo"}>Add MFO target</Link></li>
-      <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/updateMfo"}>Update MFO</Link></li> */}
+      <li className="p-2 hover:bg-gray-700 text-sm"> <Link href={"/encoder/targets/addMfo"}>Add MFO target</Link></li>
+      <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/updateMfo"}>Update MFO</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/beds123"}>BEDs123</Link></li>
       {/* <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/flaggedTargets"}>Flagged MFO Targets</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/addByDistrict"}>Add By District</Link></li> */}
