@@ -1,5 +1,5 @@
-import { db } from "../../../../../db";
-import { auth } from "../../../../../auth";
+import { db } from "../../../../db";
+import { auth } from "../../../../auth";
 
 export async function GET(
   req: Request,
@@ -20,11 +20,8 @@ export async function GET(
       status: 401,
     });
   }
-  const id = (await params).id;
   const prov = (await params).prov;
   const dist = (await params).dist;
-
-  console.log(id, prov, dist);
 
   try {
     // const result = await db.$queryRaw`
@@ -55,6 +52,10 @@ export async function GET(
         mfo.mfo_id, 
         
         SUM(district.target) AS target, 
+        SUM(district.jan + district.feb + district.mar) AS q1a, 
+        SUM(district.apr + district.may + district.jun) AS q2a, 
+        SUM(district.jul + district.aug + district.sep) AS q3a, 
+        SUM(district.oct + district.nov + district.dece) AS q4a, 
         SUM(district.cost) AS cost, 
         district.groups, 
         district.flagged, 
@@ -75,6 +76,12 @@ export async function GET(
         GROUP_CONCAT(CONCAT(district.municipal, ' [', 
           COALESCE(district.oct, 0) + COALESCE(district.nov, 0) + COALESCE(district.dece, 0), 
           ']') ORDER BY district.municipal SEPARATOR ', ') AS Q4,
+        GROUP_CONCAT(CONCAT(district.municipal, ' [', 
+          COALESCE(district.jan, 0) + COALESCE(district.feb, 0) + COALESCE(district.mar, 0) +
+          COALESCE(district.apr, 0) + COALESCE(district.may, 0) + COALESCE(district.jun, 0) +
+          COALESCE(district.jul, 0) + COALESCE(district.aug, 0) + COALESCE(district.sep, 0) +
+          COALESCE(district.oct, 0) + COALESCE(district.nov, 0) + COALESCE(district.dece, 0),
+          ']') ORDER BY district.municipal SEPARATOR ', ') AS TotalAccomplishment,
         
         SUM(
           COALESCE(district.jan, 0) + COALESCE(district.feb, 0) + COALESCE(district.mar, 0) +
@@ -85,11 +92,9 @@ export async function GET(
 
       FROM district
       INNER JOIN mfo ON mfo.mfo_id = district.mfo_id
-      INNER JOIN users ON users.user_id = mfo.user_id
 
       WHERE 
-        mfo.user_id = ${Number(id)} 
-        AND mfo.area = 1 
+        mfo.area = 1 
         AND district.province = ${String(prov)} 
         AND district.district = ${Number(dist)}
 

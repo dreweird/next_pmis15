@@ -14,6 +14,7 @@ const Navbar = async () => {
           <Link href="/encoder/targets" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Targets</Link>
           <Link href="/encoder/accomplishment" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Accomplishment</Link>
           <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link>
+           <Link href="/proposal" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">ICT Proposal for 2026</Link>
         </div>}
 
         {session?.user && session?.user.email === 7 &&   <div className="flex items-center gap-x-5 hover:bg-blue-600 bg-blue-700">

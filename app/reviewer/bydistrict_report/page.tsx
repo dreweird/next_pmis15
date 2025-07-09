@@ -1,6 +1,5 @@
 "use client";
 
-import SelectOffice from "@/app/components/SelectOffice";
 import SelectProvince from "@/app/components/SelectProvince";
 import SelectDistrict from "@/app/components/SelectDistrict";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -38,10 +37,6 @@ const district = () => {
 
   const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
 
-  const handleSelect = (value: any) => {
-    setSelectedValue(value);
-  };
-
   const handleSelect2 = (value: any) => {
     setSelectedValueProv(value);
   };
@@ -52,7 +47,7 @@ const district = () => {
 
   const hancleClick = () => {
     fetch(
-      `/api/byDistrict/${selectedValue}/${selectedValueProv}/${selectedValueDist}`
+      `/api/byDistrictReport/${selectedValueProv}/${selectedValueDist}`
     ) // Fetch data from server
       .then((result) => result.json()) // Convert to JSON
       .then((rowData) => {
@@ -73,7 +68,7 @@ const district = () => {
       width: 100,
       cellClass: ["data"],
     },
-    { headerName: "Budget", field: "cost", width: 100, cellClass: ["data"] },
+    { headerName: "Budget", field: "cost", width: 100, cellClass: ["data"], valueFormatter: custom.currencyFormatter, },
     {
       headerName: "Physical Target",
       marryChildren: true,
@@ -102,56 +97,34 @@ const district = () => {
       headerName: "Physical Accomplishment",
       marryChildren: true,
       children: [
-        // {headerName: "Q1",  minWidth: 40, editable: false, valueFormatter: custom.currencyFormatter, valueGetter: p => p.data.jan + p.data.feb + p.data.mar, aggFunc: 'sum', colId: 'q1', cellClass: ['data']},
-        // {headerName: "Q2",  minWidth: 40, editable: false, valueFormatter: custom.currencyFormatter, valueGetter: p => p.data.apr + p.data.may + p.data.jun, aggFunc: 'sum', colId: 'q2', cellClass: ['data']},
-        // {headerName: "Q3",  minWidth: 40, editable: false, valueFormatter: custom.currencyFormatter, valueGetter: p => p.data.jul + p.data.aug + p.data.sep, aggFunc: 'sum', colId: 'q3', cellClass: ['data']},
-        // {headerName: "Q4",  minWidth: 40, editable: false, valueFormatter: custom.currencyFormatter, valueGetter: p => p.data.oct + p.data.nov + p.data.dece, aggFunc: 'sum', colId: 'q4', cellClass: ['data']},
-        // {headerName: "TOTAL",  minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter, aggFunc: 'sum', cellStyle: custom.customStyleGroupDisburse, valueGetter: p => p.getValue('q1') + p.getValue('q2') + p.getValue('q3') + p.getValue('q4'), colId: 'total', cellClass: ['data', 't']},
-        {
-          headerName: "Q1",
-          field: "Q1",
-          minWidth: 40,
-          editable: false,
-          valueFormatter: custom.currencyFormatter,
-          colId: "Q1",
-          cellClass: ["data"],
-        },
-        {
-          headerName: "Q2",
-          field: "Q2",
-          minWidth: 40,
-          editable: false,
-          valueFormatter: custom.currencyFormatter,
-          colId: "Q2",
-          cellClass: ["data"],
-        },
-        {
-          headerName: "Q3",
-          field: "Q3",
-          minWidth: 40,
-          editable: false,
-          valueFormatter: custom.currencyFormatter,
-          colId: "Q3",
-          cellClass: ["data"],
-        },
-        {
-          headerName: "Q4",
-          field: "Q4",
-          minWidth: 40,
-          editable: false,
-          valueFormatter: custom.currencyFormatter,
-          colId: "Q4",
-          cellClass: ["data"],
-        },
+        {headerName: "Q1", marryChildren: true,
+          children: [       
+            {headerName: "Accomplishment",  field: "q1a", minWidth: 20, editable: false, valueFormatter: custom.currencyFormatter, cellClass: ['data']},
+            {headerName: "Location",field: "Q1",minWidth: 40,cellClass: ["data"],},
+        ]},
+        {headerName: "Q2", marryChildren: true,
+          children: [       
+            {headerName: "Accomplishment",  field: "q2a", minWidth: 20, editable: false, valueFormatter: custom.currencyFormatter, cellClass: ['data']},
+            {headerName: "Location",field: "Q2",minWidth: 40,cellClass: ["data"],},
+        ]},
+        {headerName: "Q3", marryChildren: true,
+          children: [       
+            {headerName: "Accomplishment",  field: "q3a", minWidth: 20, editable: false, valueFormatter: custom.currencyFormatter, cellClass: ['data']},
+            {headerName: "Location",field: "Q3",minWidth: 40,cellClass: ["data"],},
+        ]},
+        {headerName: "Q4", marryChildren: true,
+          children: [       
+            {headerName: "Accomplishment",  field: "q4a", minWidth: 20, editable: false, valueFormatter: custom.currencyFormatter, cellClass: ['data']},
+            {headerName: "Location",field: "Q4",minWidth: 40,cellClass: ["data"],},
+        ]},
+  
         {
           headerName: "TOTAL",
           field: "TOTAL",
-          minWidth: 40,
-          editable: false,
-          valueFormatter: custom.currencyFormatter,
-          colId: "TOTAL",
+          minWidth: 20,
           cellClass: ["data"],
         },
+         {headerName: "Location",field: "TotalAccomplishment",minWidth: 40,cellClass: ["data"],},
       ],
     },
   ]);
@@ -190,7 +163,6 @@ const district = () => {
   return (
     <div>
       <div className="flex items-stretch ...">
-        <SelectOffice onSelect={handleSelect} />
         <SelectProvince onSelect={handleSelect2} />
         <SelectDistrict onSelect={handleSelect3} />
         <button
@@ -199,6 +171,7 @@ const district = () => {
         >
           Generate Report
         </button>
+        
       </div>
       <div style={{ height: 700, width: "100%" }}>
         <ExportButton gridRef={gridRef} fileName="ByDistrict.xlsx" />

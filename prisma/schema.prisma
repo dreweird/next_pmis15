@@ -241,3 +241,12 @@ model users {
 
   @@index([program_id], map: "program_id")
 }
+
+model proposal {
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  item    String @db.VarChar(500)
+  qty     Int
+  enduser String @db.VarChar(500)
+  purpose String @db.Text
+}
