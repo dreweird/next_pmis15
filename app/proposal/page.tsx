@@ -1,11 +1,11 @@
-import React from 'react'
+import ProposalTable from "../components/ProposalTable"
 
-const page = () => {
+const ProposalPage= () => {
   return (
     <div>
-      ICT Proposal for 2026
-   </div>
+      <ProposalTable/>
+    </div>
   )
 }
 
-export default page
+export default ProposalPage
