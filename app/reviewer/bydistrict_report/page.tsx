@@ -51,9 +51,8 @@ const district = () => {
     ) // Fetch data from server
       .then((result) => result.json()) // Convert to JSON
       .then((rowData) => {
-        console.log(rowData.result);
         setRowData(rowData.result);
-      }); // Update state of `rowData`
+      });
   };
 
   const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([

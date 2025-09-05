@@ -20,3 +20,5 @@ export  async function GET(){
    // res.status(403).json({success: false });
   }
 }
+
+// prisma, $queryRaw

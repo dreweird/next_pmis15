@@ -3,7 +3,6 @@ import Link from "next/link";
 import Logout from "./Logout";
 const Navbar = async () => {
   const session = await auth();
-  console.log(session?.user?.email);
   return (
     <nav className="flex items-center flex-wrap text-white bg-blue-700">
       <div className="flex w-full items-center justify-between my-2">

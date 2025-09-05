@@ -16,9 +16,7 @@ LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_ke
  
 const page = () => {
 
-   //   const { data, error, isLoading } = useSWR('/api/mfo/list', fetcher);
-      const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
-    //  console.log(data);
+    const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState<any[]>([]);
 
     useEffect(() => {
