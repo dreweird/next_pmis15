@@ -15,6 +15,7 @@ export  async function GET(){
       SELECT p.id, p.user_id, p.item, p.qty, p.enduser, p.purpose, u.username, u.first_name
       FROM proposal p
       INNER JOIN users u ON p.user_id = u.user_id
+      WHERE u.user_id =  ${session?.user?.id}
     `;
 
     return Response.json({ result })

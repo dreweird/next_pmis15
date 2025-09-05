@@ -33,7 +33,7 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
       let id = Number(selectedValue) 
       fetch(`/api/byDistrict/${id}`) // Fetch data from server
         .then((result) => result.json()) // Convert to JSON
-        .then((rowData) => {console.log(rowData.result);setRowData(rowData.result)}); // Update state of `rowData`
+        .then((rowData) => {setRowData(rowData.result)}); // Update state of `rowData`
    
     }, [selectedValue]);
 

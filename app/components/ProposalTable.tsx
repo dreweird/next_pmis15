@@ -12,6 +12,7 @@ import TagDeleteConfirmationModal from './ConfirmationModal';
 
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { json } from 'stream/consumers';
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
@@ -88,6 +89,7 @@ const ProposalTable = () => {
     try {
       const res = await fetch('/api/proposal/list');
       const json = await res.json();
+      console.log(res)
       setData(json.result);
     } catch (err) {
       console.error('Error fetching proposals:', err);
