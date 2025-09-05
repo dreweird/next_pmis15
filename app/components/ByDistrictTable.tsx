@@ -41,6 +41,7 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
       { field: 'mfo_id',  hide: true},
       { field: 'name',  rowGroup: true, hide: true},
       { field: 'province',  rowGroup: true, hide: true},
+      {headerName: "Groups", field: 'groups', minWidth: 300},
       {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
       {headerName: "Jan", field: 'jan', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[0].locked == 1}, aggFunc: 'sum',},
       {headerName: "Feb", field: 'feb', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[1].locked == 1}, aggFunc: 'sum',},
