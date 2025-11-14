@@ -39,8 +39,11 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
 
     const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
       { field: 'mfo_id',  hide: true},
+      { field: 'h2',  rowGroup: true, hide: true},
+      { field: 'h3',  rowGroup: true, hide: true},
       { field: 'name',  rowGroup: true, hide: true},
       { field: 'province',  rowGroup: true, hide: true},
+     // { field: 'id',  rowGroup: false, hide: false},
       {headerName: "Groups", field: 'groups', minWidth: 300},
       {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
       {headerName: "Jan", field: 'jan', valueFormatter: custom.currencyFormatter, editable: params => { if (params.node.group) return false;return  locked[0].locked == 1}, aggFunc: 'sum',},

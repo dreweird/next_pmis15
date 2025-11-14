@@ -15,7 +15,7 @@ export  async function GET(req: Request, { params }: {params: Promise<{id: numbe
   try {
     const result = await db.$queryRaw`
       SELECT district.id, district.province, district.municipal, 
-      district.target,district.cost,district.groups,mfo.name, mfo.mfo_id, district.flagged, district.remarks,
+      district.target,district.cost,district.groups,mfo.name, mfo.mfo_id, mfo.h2, mfo.h3, district.flagged, district.remarks,
       district.jan, district.feb, district.mar, district.apr, district.may, district.jun,
       district.jul, district.aug, district.sep, district.oct, district.nov, district.dece FROM district
       INNER JOIN mfo ON mfo.mfo_id = district.mfo_id

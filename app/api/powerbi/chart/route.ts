@@ -88,18 +88,18 @@ FROM (
     UNION ALL SELECT user_id, 'Dec', h1,h3,h4, NULL, NULL, NULL, deca_ot + deca_otc, NULL, NULL FROM mfo
 
     -- DT
-    UNION ALL SELECT user_id, 'Jan', h1,h3,h4, NULL, NULL, NULL, NULL, jan_dt + jan_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Feb', h1,h3,h4, NULL, NULL, NULL, NULL, feb_dt + feb_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Mar', h1,h3,h4, NULL, NULL, NULL, NULL, mar_dt + mar_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Apr', h1,h3,h4, NULL, NULL, NULL, NULL, apr_dt + apr_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'May', h1,h3,h4, NULL, NULL, NULL, NULL, may_dt + may_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Jun', h1,h3,h4, NULL, NULL, NULL, NULL, jun_dt + jun_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Jul', h1,h3,h4, NULL, NULL, NULL, NULL, jul_dt + jul_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Aug', h1,h3,h4, NULL, NULL, NULL, NULL, aug_dt + aug_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Sep', h1,h3,h4, NULL, NULL, NULL, NULL, sep_dt + sep_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Oct', h1,h3,h4, NULL, NULL, NULL, NULL, oct_dt + oct_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Nov', h1,h3,h4, NULL, NULL, NULL, NULL, nov_dt + nov_dt, NULL FROM mfo
-    UNION ALL SELECT user_id, 'Dec', h1,h3,h4, NULL, NULL, NULL, NULL, dec_dt + dec_dt, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Jan', h1,h3,h4, NULL, NULL, NULL, NULL, jan_dt + jan_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Feb', h1,h3,h4, NULL, NULL, NULL, NULL, feb_dt + feb_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Mar', h1,h3,h4, NULL, NULL, NULL, NULL, mar_dt + mar_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Apr', h1,h3,h4, NULL, NULL, NULL, NULL, apr_dt + apr_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'May', h1,h3,h4, NULL, NULL, NULL, NULL, may_dt + may_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Jun', h1,h3,h4, NULL, NULL, NULL, NULL, jun_dt + jun_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Jul', h1,h3,h4, NULL, NULL, NULL, NULL, jul_dt + jul_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Aug', h1,h3,h4, NULL, NULL, NULL, NULL, aug_dt + aug_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Sep', h1,h3,h4, NULL, NULL, NULL, NULL, sep_dt + sep_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Oct', h1,h3,h4, NULL, NULL, NULL, NULL, oct_dt + oct_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Nov', h1,h3,h4, NULL, NULL, NULL, NULL, nov_dt + nov_dtc, NULL FROM mfo
+    UNION ALL SELECT user_id, 'Dec', h1,h3,h4, NULL, NULL, NULL, NULL, dec_dt + dec_dtc, NULL FROM mfo
 
     -- DA
     UNION ALL SELECT user_id, 'Jan', h1,h3,h4, NULL, NULL, NULL, NULL, NULL, jana_dt + jana_dtc FROM mfo
