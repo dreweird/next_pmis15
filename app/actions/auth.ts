@@ -1,5 +1,3 @@
-"use server";
-
 import { signIn, signOut } from "../auth";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -40,3 +38,4 @@ export const loginWithCreds = async (prevState: any, formData: FormData)  => {
   revalidatePath("/");
   return { message: "Login successful" };
 };
+

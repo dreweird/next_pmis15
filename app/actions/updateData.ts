@@ -1,9 +1,6 @@
-"use server";
-
 export async function updateData(mfo_id: number, col_name: string, value: number) {
-
-    const apiURL = process.env.NEXTAUTH_URL;
-    const response = await fetch(`https://apps.caraga.da.gov.ph/api/mfo/update`, {
+    
+    const response = await fetch(`/api/mfo/update`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -11,13 +8,14 @@ export async function updateData(mfo_id: number, col_name: string, value: number
         body: JSON.stringify({ mfo_id, col_name, value }),
       });
       const res = await response.json();
+
+      console.log("Response from updateData:", res);
       return res;
 }
 
 export async function updateDataDistrict(id: number, col_name: string, value: number) {
 
-  const apiURL = process.env.NEXTAUTH_URL;
-  const response = await fetch(`${apiURL}/api/byDistrict/update`, {
+  const response = await fetch(`/api/byDistrict/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +29,7 @@ export async function updateDataDistrict(id: number, col_name: string, value: nu
 export async function updateDataMFOfromDistrict(id: number, col_name: string, value: number) {
 
   const apiURL = process.env.NEXTAUTH_URL;
-  const response = await fetch(`${apiURL}/api/byDistrict/updateMFO`, {
+  const response = await fetch(`/api/byDistrict/updateMFO`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

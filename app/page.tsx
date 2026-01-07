@@ -3,7 +3,12 @@ export default function Home() {
 
 
   return (
-          <section className="relative bg-[url(https://i.pinimg.com/originals/4a/94/26/4a94268541d7a0ed95a8be5138e8a288.jpg)] bg-cover bg-center bg-no-repeat">
+      <section className="relative bg-cover bg-center bg-no-repeat">
+        <img
+        src="/background.jpg"
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
       <div className="absolute inset-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/90 sm:to-white/25"></div>
 
       <div className="relative mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
