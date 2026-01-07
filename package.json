@@ -35,6 +35,7 @@
     "postcss": "^8",
     "prisma": "^6.4.0",
     "tailwindcss": "^4.1.18",
+    "@tailwindcss/postcss": "^1.0.0",
     "typescript": "^5",
     "patch-package": "^1.5.0"
   }
