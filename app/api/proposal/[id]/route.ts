@@ -3,7 +3,7 @@ import { auth } from "../../../auth";
 
 export async function GET(
  req: Request,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth();
 
@@ -11,7 +11,7 @@ export async function GET(
     return new Response(`Unauthorized access`, { status: 401 });
   }
 
-  const id = (await params).id;
+  const id = Number((await params).id);
 
   try {
     const result = await db.proposal.findUnique({
