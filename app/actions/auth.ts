@@ -31,7 +31,6 @@ export const loginWithCreds = async (prevState: any, formData: FormData)  => {
 
     throw error;
   }
-  revalidatePath("/");
   return { message: "Login successful" };
 };
 
