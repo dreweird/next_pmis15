@@ -1,7 +1,8 @@
 import { db } from "../../../db";
 import { auth } from "../../../auth";
 
-export  async function GET(req: Request, { params }: {params: Promise<{id: number}>}){
+export  async function GET(req: Request, { params }: {params: Promise<{id: string}>}){
+  const id = Number((await params).id);
 
  const session = await auth();
 
@@ -10,7 +11,7 @@ export  async function GET(req: Request, { params }: {params: Promise<{id: numbe
       status: 401,
     })
   }
-  const id = (await params).id;
+
 
   try {
     const result = await db.$queryRaw`
