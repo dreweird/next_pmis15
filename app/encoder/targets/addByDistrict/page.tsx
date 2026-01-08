@@ -2,7 +2,7 @@
 
 import SaveButton from '@/app/components/SaveButton';
 import { useRouter } from 'next/navigation'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 interface InputItem {
   mfo_id: string;
@@ -91,7 +91,8 @@ const page = () => {
   };
 
 
-  async function formAction() {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const JSONdata = JSON.stringify(inputList)
     const endpoint = '/api/byDistrict/add';
     const options = {
@@ -112,7 +113,7 @@ const page = () => {
   }
 
   return (  <div  className="mx-auto p-8 overflow-x-auto">
-     <form action={formAction}>
+     <form onSubmit={handleSubmit}>
     {/* <form onSubmit={handleSubmit}> */}
   
         <table className='table-fixed w-full border-separate border-spacing-2 border border-slate-40'>

@@ -50,7 +50,8 @@ const page = () => {
   };
 
 
-  async function formAction() {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const JSONdata = JSON.stringify(inputList)
     const endpoint = '/api/mfo/add';
     const options = {
@@ -71,7 +72,7 @@ const page = () => {
   }
 
   return (  <div  style={{ width: '100%' }}>
-     <form action={formAction}>
+     <form onSubmit={handleSubmit}>
     {/* <form onSubmit={handleSubmit}> */}
   
         <table style={{ width: '100%' }}>

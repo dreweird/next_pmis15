@@ -1,9 +1,9 @@
 "use client";
-import { logout } from "../actions/auth";
+import { signOut } from "next-auth/react";
 
 const Logout = () => {
   return (
-    <div onClick={() => logout()}>
+    <div onClick={() => signOut({ callbackUrl: '/' })}>
       <div className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">
         logout
       </div>
