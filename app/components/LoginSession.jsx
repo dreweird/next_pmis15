@@ -9,7 +9,6 @@ import {
   MenuItem,
  } from "@material-tailwind/react";
   import { PowerIcon, UserIcon } from "@heroicons/react/24/outline";
-import { logout } from "../actions/auth";
 
 export default function LoginSession() {
   const { data: session } = useSession();
@@ -34,7 +33,7 @@ export default function LoginSession() {
               </Link>
             </MenuItem>
             <MenuItem>
-              <div onClick={() => logout()}>
+              <div onClick={() => signOut({ callbackUrl: '/' })}>
                   <span className=" focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 text-center inline-flex items-center mr-2">
                   <PowerIcon
                   className="w-5 mr-2 -ml-1 items-left"
