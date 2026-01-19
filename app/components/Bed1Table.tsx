@@ -36,7 +36,7 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
    
     }, [selectedValue]);
 
-        const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
+    const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
           { field: 'h1',  rowGroup: true, hide: true},
           { field: 'h2',  rowGroup: true, hide: true},
           { field: 'h3',  rowGroup: true, hide: true},
@@ -192,7 +192,7 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
               {
                 headerName: 'Jan', columnGroupShow: 'open',
                 children: [
-                  {headerName: "MOOE", field: "jana_ot", columnGroupShow: "open", type: 'valueColumn',  cellClass: ['data'], editable: () => {console.log(type); return type === 7}},
+                  {headerName: "MOOE", field: "jana_ot", columnGroupShow: "open", type: 'valueColumn',  cellClass: ['data'], editable: () => type === 7},
                   {headerName: "CO", field: "jana_otc", columnGroupShow: "open", type: 'valueColumn',  cellClass: ['data'],  editable: () => type === 7},
                   { headerName: 'TOTAL', type: 'totalColumn', cellClass: ['data', 'a'], valueGetter: custom.total_janfa, colId: 'jan_tota'}
                 ]
