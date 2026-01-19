@@ -12,6 +12,8 @@ export default function BlogLayout({
       <h1 className="text-2xl font-bold">Menu</h1>
       </div>
       <ul>
+     <li className="p-2 hover:bg-gray-700 text-sm"> <Link href={"/reviewer/bed123"}>Review BED123</Link></li>
+           <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/reviewer/byDistrict_target_review"}>Review By District</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"> <Link href={"/reviewer/bed1"}>BED 1</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/reviewer/bed2"}>BED 2</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/reviewer/bed3"}>BED 3</Link></li>

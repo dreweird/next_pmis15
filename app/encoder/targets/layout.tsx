@@ -15,8 +15,8 @@ export default function BlogLayout({
       <li className="p-2 hover:bg-gray-700 text-sm"> <Link href={"/encoder/targets/addMfo"}>Add MFO target</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/updateMfo"}>Update MFO</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/beds123"}>BEDs123</Link></li>
-      {/* <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/flaggedTargets"}>Flagged MFO Targets</Link></li>
-      <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/addByDistrict"}>Add By District</Link></li> */}
+      <li className="p-2 hover:bg-red-700 text-sm"><Link href={"/encoder/targets/flaggedTargets"}>Flagged MFO Targets</Link></li>
+      <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/addByDistrict"}>Add By District</Link></li>
       <li className="p-2 hover:bg-gray-700 text-sm"><Link href={"/encoder/targets/byDistrict"}>By District Targets</Link></li>
 
       </ul>

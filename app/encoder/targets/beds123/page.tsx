@@ -18,13 +18,21 @@ const page = () => {
 
     const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState<any[]>([]);
+      const [currentId, setCurrentID] = useState();
+        const [status2, setStatus] = useState();
 
     useEffect(() => {
       fetch("/api/mfo/list") // Fetch data from server
         .then((result) => result.json()) // Convert to JSON
         .then((rowData) => setRowData(rowData.result)); // Update state of `rowData`
-      
-    }, []);
+
+        fetch("/api/users/retrieve") // Fetch data from server
+        .then((result) => result.json()) // Convert to JSON
+        .then((rowData) => 
+          {setCurrentID(rowData.result.user_id); // Update state of `rowData`
+            setStatus(rowData.result.status);
+          });
+        }, [])
 
         const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
             { field: 'h1',  rowGroup: true, hide: true},
@@ -62,8 +70,8 @@ const page = () => {
                   {
                     headerName: 'Q1',
                     children: [
-                      { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1ft', valueGetter: custom.total_q1_mooe_ft},
-                      { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1ft_co', valueGetter: custom.total_q1_co_ft},
+                      { headerName: 'MOOE', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1ft', valueGetter: custom.total_q1_mooe_ft},
+                      { headerName: 'CO', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1ft_co', valueGetter: custom.total_q1_co_ft},
                       { headerName: 'TOTAL', type: 'obligationColumn', cellClass: ['data', 't'], colId: 'q1_tot', valueGetter: custom.total_q1}
                     ]
                   },
@@ -94,8 +102,8 @@ const page = () => {
                   {
                     headerName: 'Q2',
                     children: [
-                      { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2ft', valueGetter: custom.total_q2_mooe_ft},
-                      { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2ft_co', valueGetter: custom.total_q2_co_ft},
+                      { headerName: 'MOOE', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2ft', valueGetter: custom.total_q2_mooe_ft},
+                      { headerName: 'CO', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2ft_co', valueGetter: custom.total_q2_co_ft},
                       { headerName: 'TOTAL', type: 'obligationColumn', cellClass: ['data', 't'], colId: 'q2_tot', valueGetter: custom.total_q2}
                     ]
                   },
@@ -126,8 +134,8 @@ const page = () => {
                   {
                     headerName: 'Q3',
                     children: [
-                      { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3ft', valueGetter: custom.total_q3_mooe_ft},
-                      { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3ft_co', valueGetter: custom.total_q3_co_ft},
+                      { headerName: 'MOOE', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3ft', valueGetter: custom.total_q3_mooe_ft},
+                      { headerName: 'CO', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3ft_co', valueGetter: custom.total_q3_co_ft},
                       { headerName: 'TOTAL', type: 'obligationColumn', cellClass: ['data', 't'], colId: 'q3_tot', valueGetter: custom.total_q3}
                     ]
                   },
@@ -158,16 +166,16 @@ const page = () => {
                   {
                     headerName: 'Q4',
                     children: [
-                      { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4ft', valueGetter: custom.total_q4_mooe_ft},
-                      { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4ft_co', valueGetter: custom.total_q4_co_ft},
+                      { headerName: 'MOOE', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4ft', valueGetter: custom.total_q4_mooe_ft},
+                      { headerName: 'CO', type: 'quarterColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4ft_co', valueGetter: custom.total_q4_co_ft},
                       { headerName: 'TOTAL', type: 'obligationColumn', cellClass: ['data', 't'], colId: 'q4_tot', valueGetter: custom.total_q4}
                     ]
                   },
                   {
                     headerName: 'Grand Total',
                     children: [
-                      { headerName: 'MOOE', minWidth: 110,aggFunc: custom.GrandTotalAggFunc, valueFormatter: custom.currencyFormatter, columnGroupShow: 'open', cellClass: ['data'], colId: 'total_ft', valueGetter: custom.total_mooe_ft},
-                      { headerName: 'CO', minWidth: 110,aggFunc: custom.GrandTotalAggFunc, valueFormatter: custom.currencyFormatter, columnGroupShow: 'open', cellClass: ['data'], colId: 'total_ft_co', valueGetter: custom.total_co_ft},
+                      { headerName: 'MOOE', type: 'quarterColumn', minWidth: 110,aggFunc: custom.GrandTotalAggFunc, valueFormatter: custom.currencyFormatter, columnGroupShow: 'open', cellClass: ['data'], colId: 'total_ft', valueGetter: custom.total_mooe_ft},
+                      { headerName: 'CO', type: 'quarterColumn', minWidth: 110,aggFunc: custom.GrandTotalAggFunc, valueFormatter: custom.currencyFormatter, columnGroupShow: 'open', cellClass: ['data'], colId: 'total_ft_co', valueGetter: custom.total_co_ft},
                       { headerName: 'TOTAL', type: 'numericColumn', cellClass: ['data', 'total'], colId: 'grandtotal_ft', valueGetter: custom.grandtotal_ft,
                       cellStyle: params => {
                         if(params.node.group) { return { color: 'black', 'backgroundColor': '#81f7a6', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#81f7a6', 'fontWeight': 'normal'}}
@@ -266,8 +274,8 @@ const page = () => {
                 {
                   headerName: 'Q1',
                   children: [
-                    { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1dt', valueGetter: custom.total_q1_mooe_dt},
-                    { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1dt_co', valueGetter: custom.total_q1_co_dt},
+                    { headerName: 'MOOE', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1dt', valueGetter: custom.total_q1_mooe_dt},
+                    { headerName: 'CO', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q1dt_co', valueGetter: custom.total_q1_co_dt},
                     { headerName: 'TOTAL', type: 'disbursementColumn', cellClass: ['data', 't'], colId: 'q1dt_tot', valueGetter: custom.totaldt_q1}
                   ]
                 },
@@ -298,8 +306,8 @@ const page = () => {
                 {
                   headerName: 'Q2',
                   children: [
-                    { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2dt', valueGetter: custom.total_q2_mooe_dt},
-                    { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2dt_co', valueGetter: custom.total_q2_co_dt},
+                    { headerName: 'MOOE', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2dt', valueGetter: custom.total_q2_mooe_dt},
+                    { headerName: 'CO', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q2dt_co', valueGetter: custom.total_q2_co_dt},
                     { headerName: 'TOTAL', type: 'disbursementColumn', cellClass: ['data', 't'], colId: 'q2dt_tot', valueGetter: custom.totaldt_q2}
                   ]
                 },
@@ -330,8 +338,8 @@ const page = () => {
                 {
                   headerName: 'Q3',
                   children: [
-                    { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3dt', valueGetter: custom.total_q3_mooe_dt},
-                    { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3dt_co', valueGetter: custom.total_q3_co_dt},
+                    { headerName: 'MOOE', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3dt', valueGetter: custom.total_q3_mooe_dt},
+                    { headerName: 'CO', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q3dt_co', valueGetter: custom.total_q3_co_dt},
                     { headerName: 'TOTAL', type: 'disbursementColumn', cellClass: ['data', 't'], colId: 'q3dt_tot', valueGetter: custom.totaldt_q3}
                   ]
                 },
@@ -362,16 +370,16 @@ const page = () => {
                 {
                   headerName: 'Q4',
                   children: [
-                    { headerName: 'MOOE', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4dt', valueGetter: custom.total_q4_mooe_dt},
-                    { headerName: 'CO', type: 'valueColumn', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4dt_co', valueGetter: custom.total_q4_co_dt},
+                    { headerName: 'MOOE', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4dt', valueGetter: custom.total_q4_mooe_dt},
+                    { headerName: 'CO', type: 'quarterColumn2', columnGroupShow: 'open', cellClass: ['data'], colId: 'q4dt_co', valueGetter: custom.total_q4_co_dt},
                     { headerName: 'TOTAL', type: 'disbursementColumn', cellClass: ['data', 't'], colId: 'q4dt_tot', valueGetter: custom.totaldt_q4}
                   ]
                 },
                 {
                   headerName: 'Grand Total',
                   children: [
-                    { headerName: 'MOOE', type: 'valueColumn', minWidth: 110,columnGroupShow: 'open', cellClass: ['data'], colId: 'total_dt', valueGetter: custom.total_mooe_dt},
-                    { headerName: 'CO', type: 'valueColumn', minWidth: 110,columnGroupShow: 'open', cellClass: ['data'], colId: 'total_dt_co', valueGetter: custom.total_co_dt},
+                    { headerName: 'MOOE', type: 'quarterColumn2', minWidth: 110,columnGroupShow: 'open', cellClass: ['data'], colId: 'total_dt', valueGetter: custom.total_mooe_dt},
+                    { headerName: 'CO', type: 'quarterColumn2', minWidth: 110,columnGroupShow: 'open', cellClass: ['data'], colId: 'total_dt_co', valueGetter: custom.total_co_dt},
                     { headerName: 'TOTAL', type: 'numericColumn', minWidth: 110,cellClass: ['data', 'total'], colId: 'grandtotal_dt', valueGetter: custom.grandtotal_dt,
                     cellStyle: params => {
                       if(params.node.group) { return { color: 'black', 'backgroundColor': '#81f7a6', 'fontWeight': 'bold' }}else{return { color: 'black', 'backgroundColor': '#81f7a6', 'fontWeight': 'normal'}}
@@ -400,20 +408,7 @@ const page = () => {
               autoHeaderHeight: true,
         
             };
-          }, []);
-        
-          const SimpleCellRenderer = (props: { node: { group: any; }; data: { area: number; main: number; flagged: number; }; value: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }) => {
-            if (!props.node.group && props.data.area == 1) {
-              return <span className="bg-yellow-300"> {props.value} </span>
-            } else if(!props.node.group && props.data.main == 1){
-              return <span className="bg-cyan-300"> {props.value} </span>
-            } else if(!props.node.group && props.data.flagged == 1){
-              return <span className="bg-red-800 text-white"> {props.value} </span>
-            }else {
-              return <span> {props.value} </span>
-            }
-          }
-        
+          }, []);  
     
 
           const autoGroupColumnDef: ColDef = useMemo(() => {
@@ -426,10 +421,11 @@ const page = () => {
                   cellRenderer: "agGroupCellRenderer",
                   cellRendererParams: {
                       suppressCount: true,
-                      innerRenderer: SimpleCellRenderer,
+                      innerRenderer: custom.SimpleCellRenderer,
                       //checkbox: false,
                   },
                   cellClass: ['data'],
+                  cellClassRules: {"bold": params => params.node.group ? true : false}         
            
                   
               };
@@ -467,6 +463,13 @@ const page = () => {
                 cellStyle: custom.customStyleGroupQaurter2,
                 valueFormatter: custom.currencyFormatter
               },
+              quarterColumn: {
+                minWidth: 110,
+                aggFunc: custom.GrandTotalAggFunc,
+                cellRenderer: 'agAnimateShowChangeCellRenderer',
+                cellStyle: custom.customStyleGroupQaurter2,
+                valueFormatter: custom.currencyFormatter
+              },
               disbursementColumn: {
                 minWidth: 110,
                 aggFunc: custom.TotalQuarterAggFunc,
@@ -474,6 +477,13 @@ const page = () => {
                 cellStyle: custom.customStyleGroupDisburse,
                 valueFormatter: custom.currencyFormatter
               }, 
+              quarterColumn2: {
+                minWidth: 110,
+                aggFunc: custom.GrandTotalAggFunc,
+                cellRenderer: 'agAnimateShowChangeCellRenderer',
+                cellStyle: custom.customStyleGroupDisburse,
+                valueFormatter: custom.currencyFormatter
+              },
             };
           }, []);
         
@@ -487,77 +497,30 @@ const page = () => {
             }
         
       };
-        
-          const handleUpdateData = async (mfo_id: any, col_name: any, value: any) => {
-            const response = await fetch("/api/mfo/update", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ mfo_id, col_name, value }),
-            });
-            const json = await response.json();
-            if(json) alert('Data was succesfully updated!');
-          };
-        
-        //   const submitForReview = async () => {
-        //     if (confirm("Are you sure you want to submit BEDs123 for review?") == true) {
-        //       const response = await fetch("/api/logs/add", {
-        //         method: "POST",
-        //         headers: {
-        //           "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ actions: "Submitted BEDs123 for Review", user_id: currentId }),
-        //       });
-        //       const json = await response.json();
-        //       const response2 = await fetch("/api/profile/updatestatus", {
-        //         method: "POST",
-        //         headers: {
-        //           "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ col_name: "status", value: 1, user_id: currentId }),
-        //       });
-        //       if(json) alert('Data was succesfully updated!');
-        //     } else {
-        //       alert("You pressed canceled!");
-        //     }
-        //   }
-        
-        //   const getRows = () => {
-        //               const name_office = "Sample Office"
-        //               return [
-        //               {cells: [{ styleId: 'headappend',data: {value: "DEPARTMENT OF AGRICULTURE",type: ExcelDataType.String},},],},
-        //               {cells: [{ styleId: 'headappend',data: {value: "Regional Field Office XIII",type: ExcelDataType.String},},],},
-        //               {cells: [{ styleId: 'headappend',data: {value: name_office, type: ExcelDataType.String},},],},
-        //               {cells: [{ styleId: 'headappend',data: {value: "C.Y. 2025 CURRENT APPROPRIATION",type: ExcelDataType.String},},],},
-        //               {cells: [{ styleId: 'headappend',data: {value: 'PMIS v7.0 Generated as of ' + new Date().toDateString(),type: ExcelDataType.String},},],},
-        //               {cells: [] },
-        //             ]};
-        
-        //   const getParams = () => ({
-        //     prependContent: getRows(),
-        //     processCellCallback(params: { column?: any; value?: any; node?: any; }){
-        //     const { node } = params;
-        //       if (params.column.colDef.field == 'name') {
-        //         if (node.group) {
-        //           return node.key;
-        //         } else {
-        //           return params.value;
-        //         }
-        //       } else if (params.column.colDef.field == 'fu' && isNaN(params.value))
-        //         return '';
-                
-        //       else return params.value;
-        //   },
-        //   fileName: "BEDs123.xlsx",
-        //   });
-        
-         // eslint-disable-line react-hooks/exhaustive-deps
-        //   const exportExcel = useCallback(() => {
-        //     if (gridRef.current) {
-        //       gridRef.current.api.exportDataAsExcel(getParams());
-        //     }
-        //   }, [getParams]); 
+              
+          const submitForReview = async () => {
+            if (confirm("Are you sure you want to submit BEDs123 for review?") == true) {
+              const response = await fetch("/api/logs/add", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ actions: "Submitted BEDs123 for Review", user_id: currentId }),
+              });
+              const json = await response.json();
+              const response2 = await fetch("/api/users/updateStatus", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ col_name: "status", value: 1, user_id: currentId }),
+              });
+              if(json) alert('Data was succesfully updated!');
+            } else {
+              alert("You pressed canceled!");
+            }
+          }
+
 
           const getRowId = (params: { data: { mfo_id: any; }; }) => params.data.mfo_id.toString();
           const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() => {
@@ -569,7 +532,13 @@ const page = () => {
             }, []);
   
   return (
-    <div style={{ height: 700, width: '100%' }}>
+    <div style={{ height: 700, width: '100%' }}>   
+    <div>
+      {status2 == 0 && <span className="text-lg text-red-700">BEDs 123 For Submission</span>} 
+     {status2 == 1 && <span className="text-lg text-red-700">BEDs 123 For Review</span>} 
+     {status2 == 2 && <span className="text-lg text-teal-950">BEDs 123 Approved</span>} 
+    </div>
+    {status2 == 0 &&  <button onClick={submitForReview} className="bg-teal-800 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded print:hidden">Submit for Review</button> } 
     <AgGridReact  theme={themeBalham}
              ref={gridRef} // Ref for accessing Grid's API
               getRowId={getRowId}
