@@ -1248,35 +1248,32 @@ export function totaldt_q4(params: any) {
 
 export function total_mooe_dt(params: any) {
   if (!params.node.group) {
-    return create_totalABCDE(
+    return create_totalABCD(
       params.getValue("q1dt"),
       params.getValue("q2dt"),
       params.getValue("q3dt"),
-      params.getValue("q4dt"),
-      params.getValue("dt_q1")
+      params.getValue("q4dt")
     );
   }
 }
 
 export function total_co_dt(params: any) {
   if (!params.node.group) {
-    return create_totalABCDE(
+    return create_totalABCD(
       params.getValue("q1dt_co"),
       params.getValue("q2dt_co"),
       params.getValue("q3dt_co"),
-      params.getValue("q4dt_co"),
-      params.getValue("dt_q1_co")
+      params.getValue("q4dt_co")
     );
   }
 }
 export function grandtotal_dt(params: any) {
   if (!params.node.group) {
-    return create_totalABCDE(
+    return create_totalABCD(
       params.getValue("q1dt_tot"),
       params.getValue("q2dt_tot"),
       params.getValue("q3dt_tot"),
-      params.getValue("q4dt_tot"),
-      params.getValue("dtq1_total")
+      params.getValue("q4dt_tot")
     );
   }
 }
