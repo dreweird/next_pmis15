@@ -176,10 +176,13 @@ const ProposalTable = () => {
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <div>
               <h2 className="text-2xl font-bold text-gray-800 tracking-tight">
-                List of Proposal
+                List of ICT Proposal for 2027
               </h2>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 View and manage proposal entries below.
+              </p>
+              <p className="text-xs text-red-500 dark:text-gray-400 mt-1">
+                Please input your ICT Proposal for 2027 not later than September 30, 2025.
               </p>
             </div>
             <button

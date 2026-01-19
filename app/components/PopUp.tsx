@@ -143,7 +143,7 @@ const ProposalFormModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, initial
             name="enduser"
             value={form.enduser}
             onChange={handleChange}
-            placeholder="(e.g. Corn Program)"
+            placeholder="(e.g. Juan De La Cruz)"
             error={errors.enduser}
           />
 

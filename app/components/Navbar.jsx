@@ -11,10 +11,11 @@ const Navbar = async () => {
           Home
         </Link>
         {session?.user && session?.user.email != 7 && session?.user.email != 0 && session?.user.email != 8 &&   <div className="flex items-center gap-x-5 ">
-          <Link href="/encoder/targets" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Targets</Link>
-          <Link href="/encoder/accomplishment" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Accomplishment</Link>
+          <Link href="/encoder/targets" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">NEP Targets F.Y. 2026</Link>
+          {/* <Link href="/encoder/accomplishment" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Accomplishment</Link>
           <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link>
-           <Link href="/proposal" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">ICT Proposal for 2026</Link>
+           <Link href="/proposal" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">ICT Proposal for 2027</Link>
+         */}
         </div>}
 
         {session?.user && session?.user.email === 7 &&   <div className="flex items-center gap-x-5 hover:bg-blue-600 bg-blue-700">
@@ -27,7 +28,7 @@ const Navbar = async () => {
 
         {session?.user && session?.user.email === 0 &&   <div className="flex items-center gap-x-5 hover:bg-blue-600 bg-blue-700">
           <Link href="/reviewer">BEDs123</Link>
-          <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link>
+          {/* <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link> */}
         </div>}
      
 

@@ -33,11 +33,17 @@ const page = () => {
           {headerName: "Target", field: 'target', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
           {headerName: "Cost", field: 'cost', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
           {headerName: "Groups", field: 'groups', minWidth: 100, editable: true},
-          {headerName:"Actions", field: "Actions",minWidth: 100, editable: true, 
+          {headerName: "Reviewer's Remarks", field: 'remarks', minWidth: 100, cellStyle: { color: 'white', backgroundColor: 'green' }},
+          {headerName:"Status/Actions", field: "Actions",minWidth: 100, editable: true, 
             cellRenderer: (params: any) => {
               if (params.node.group) return;
+              if(params.data.flagged == 2){
+                return <div className="text-green-500 font-bold">Approved</div>
+              }
             return (
               <div className="flex items-start">
+                {params.data.flagged == 1 && (
+                  <div className="text-red-500 font-bold">Flagged</div>)  }
             <TrashIcon onClick={() => handleDeleteData(params.data.id)}
                   className="h-6 w-6 cursor-pointer mx-4 text-red-500 shadow hover:shadow-md mr-1 mb-1 ease-linear transition-all duration-150"
                   />
