@@ -7,9 +7,8 @@ export async function GET(
     params,
   }: {
     params: Promise<{
-      prov: any;
-      dist: any;
-      id: number;
+      prov: string;
+      dist: string;
     }>;
   }
 ) {

@@ -662,10 +662,19 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
       event.colDef.field,
       event.newValue
     );
-    if (await res) {
+    try{
+      if (await res) {
       alert("Data was succesfully updated!");
+    }else{
+      alert("Data was not updated!");
     }
-  };
+    }catch(error){
+      alert("Error updating data: " + error);
+      console.log("Error updating data:", error);
+    }
+  };    
+
+  
   
   return (
     <div style={{ height: 700, width: "100%" }}>
