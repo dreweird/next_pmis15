@@ -598,7 +598,8 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
       valueColumn: {
         width: 130,
         aggFunc: "sum",
-        valueParser: "Number(newValue)",
+       // valueParser: "Number(newValue)",
+        valueParser: (params: { newValue: any; }) => Number(params.newValue),
         cellStyle: custom.customStyleGroup,
         valueFormatter: custom.currencyFormatter,
       },

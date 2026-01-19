@@ -23,7 +23,7 @@ const page = () => {
   useEffect(() => {
       fetch("/api/users/retrieve") // Fetch data from server
         .then((result) => result.json()) // Convert to JSON
-        .then((rowData) => setStatus(rowData.result.status));
+        .then((rowData) => {console.log(rowData);setStatus(rowData.result.status);});
       
     }, []);
 
