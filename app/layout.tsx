@@ -39,14 +39,7 @@ export default async function RootLayout({
         <div className="w-full text-center border-t bg-blue-700 text-white p-4 pin-b print:hidden">
           <span className="lg:text-base"> &copy; DA-RFO-XIII 2023 </span>
         </div>
-        {/* Example inline script with nonce */}
-          <script nonce={nonce}>
-            {`console.log("Secure inline script running with CSP nonce");`}
-          </script>
-         {/* Example inline style with nonce */}
-        <style nonce={nonce}> {`.ag-theme-alpine { font-family: var(--font-inter); }`} </style>
       </body>
-     
     </html>
     </SessionProvider>
   );

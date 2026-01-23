@@ -1,7 +1,7 @@
 import { db } from "../../../db";
 import { auth } from "../../../auth";
 
-export  async function GET(req: Request, { params }: {params: Promise<{id: number}>}){
+export  async function GET(req: Request, { params }: {params: Promise<{id: string}>}){
 
  const session = await auth();
 

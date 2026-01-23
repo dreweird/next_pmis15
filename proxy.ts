@@ -56,6 +56,7 @@ function buildCsp(nonce: string): string {
 const blockedPathPrefixes = [
   "/news/index.html",
   "/blog/index.html",
+  "/hello.world"
 ];
 
 const allowedMethods = new Set(["GET", "POST", "PUT", "DELETE", "OPTIONS"]);
@@ -87,7 +88,8 @@ export function proxy(req: NextRequest) {
   const res = NextResponse.next();
 
   // Security headers
-  // res.headers.set("Content-Security-Policy", buildCsp(nonce));
+  res.headers.set("Content-Security-Policy", buildCsp(nonce));
+  res.headers.set("x-nonce", nonce); // set nonce header for client-side
   res.headers.set("X-Content-Type-Options", "nosniff");
   res.headers.set("X-Frame-Options", "DENY");
   res.headers.set("Referrer-Policy", "no-referrer");
