@@ -1,6 +1,6 @@
 import { db } from "../../../db";
 import { NextRequest } from "next/server";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../../generated/prisma/client";
 
 export  async function POST(req: NextRequest){
 // Problem why auth is not working
