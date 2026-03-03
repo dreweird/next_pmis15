@@ -1,7 +1,7 @@
 "use client";
 
 import { TrashIcon } from '@heroicons/react/16/solid';
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule,  PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { AgGridReact } from 'ag-grid-react';
@@ -102,19 +102,20 @@ const defaultColDef = useMemo(() => {
       };
     }, []);
 
-const autoGroupColumnDef: ColDef = useMemo(() => {
-    return {
-          headerName: 'MFOs/PAPs',
-          pinned: 'left',
-          width: 350,
-          resizable: true,
-          field: "name",
-          cellRenderer: "agGroupCellRenderer",
-          cellRendererParams: {
-              suppressCount: true,      
-          }
-      };
-  }, []);
+
+        const autoGroupColumnDef = useMemo<AutoGroupColumnDef>(() => {
+          return {
+            headerName: 'MFOs/PAPs',
+            pinned: 'left',
+            width: 350,
+            resizable: true,
+            field: "name",
+            cellRenderer: "agGroupCellRenderer",
+            cellRendererParams: {
+                suppressCount: true,
+            }    
+            };
+         }, []);
 
   const onCellValueChanged = async (event: any) => {
     const res = updateData(event.data.mfo_id, event.colDef.field, event.newValue);

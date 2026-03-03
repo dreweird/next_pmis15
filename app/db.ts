@@ -1,16 +1,32 @@
-import { PrismaClient } from "@prisma/client";
+import 'dotenv/config'
+import { PrismaMariaDb } from '@prisma/adapter-mariadb'
+import { PrismaClient } from '../generated/prisma/client'
+
+const prismaClientSingleton = () => {
+const adapter = new PrismaMariaDb({
+  host: "172.16.128.42",
+  port: 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  connectionLimit: 5,
+});
+
+  return new PrismaClient({adapter});
+};
 
 declare global {
-  // Allow attaching Prisma to the global object in dev to avoid multiple clients during HMR
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+export const db =
+  global.prisma ||
+  prismaClientSingleton();
 
-export const db = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
-
-if (process.env.NODE_ENV !== "production") { console.warn("⚠️ Not running in production mode!"); } else { console.log("✅ Running in production mode"); }
-
+if (process.env.NODE_ENV !== "production") {
+  global.prisma = db;
+  console.warn("⚠️ Not running in production mode!");
+} else {
+  console.log("✅ Running in production mode");
+}

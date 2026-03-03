@@ -189,7 +189,7 @@ const district = () => {
           //rowSelection={rowSelection}
           getRowClass={getRowClass}
           autoGroupColumnDef={autoGroupColumnDef}
-          showOpenedGroup={true}
+          //showOpenedGroup={true}
           suppressGroupRowsSticky={true}
           // groupHideParentOfSingleChild ={true}
           excelStyles={custom.excelStyles}

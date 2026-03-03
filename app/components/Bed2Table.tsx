@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import {
+  AutoGroupColumnDef,
   ClientSideRowModelModule,
   ColDef,
   ColGroupDef,
@@ -639,23 +640,23 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
     };
   }, []);
 
-  const autoGroupColumnDef: ColDef = useMemo(() => {
-    return {
-      headerName: "MFOs/PAPs",
-      pinned: "left",
-      width: 350,
-      resizable: true,
-      field: "name",
-      cellRenderer: "agGroupCellRenderer",
-      cellRendererParams: {
-        suppressCount: true,
-        innerRenderer: custom.SimpleCellRenderer,
-        //checkbox: false,
-      },
-      cellClass: ["data"],
-      cellClassRules: { bold: (params) => (params.node.group ? true : false) },
-    };
-  }, []);
+      const autoGroupColumnDef = useMemo<AutoGroupColumnDef>(() => {
+        return {
+          headerName: 'MFOs/PAPs',
+          pinned: 'left',
+          width: 350,
+          resizable: true,
+          field: "name",
+          cellRenderer: "agGroupCellRenderer",
+          cellRendererParams: {
+              suppressCount: true,
+              innerRenderer: custom.SimpleCellRenderer,
+              //checkbox: false,
+          },
+          cellClass: ['data'],
+          cellClassRules: {"bold": params => params.node.group ? true : false}         
+          };
+       }, []);
 
   const onCellValueChanged = async (event: any) => {
     const res = updateData(
@@ -695,7 +696,6 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
         getRowClass={getRowClass}
         onCellValueChanged={onCellValueChanged}
         autoGroupColumnDef={autoGroupColumnDef}
-        showOpenedGroup={true}
         suppressGroupRowsSticky={true}
         groupHideParentOfSingleChild={true}
         excelStyles={custom.excelStyles}

@@ -2,12 +2,13 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham, AutoGroupColumnDef } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../../../utils/valueGetters';
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
 import { updateData } from '@/app/actions/updateData';
+import ExportButton from '@/app/components/ExportButton';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
@@ -413,7 +414,7 @@ const page = () => {
           }, []);  
     
 
-          const autoGroupColumnDef: ColDef = useMemo(() => {
+          const autoGroupColumnDef: AutoGroupColumnDef = useMemo(() => {
             return {
                   headerName: 'MFOs/PAPs',
                   pinned: 'left',
@@ -539,9 +540,11 @@ const page = () => {
     <div>
       {status2 == 0 && <span className="text-lg text-red-700">BEDs 123 For Submission</span>} 
      {status2 == 1 && <span className="text-lg text-red-700">BEDs 123 For Review</span>} 
-     {status2 == 2 && <span className="text-lg text-teal-950">BEDs 123 Approved</span>} 
+     {status2 == 2 && <span className="text-lg text-teal-950">BEDs 123 Approved</span>}
+      {status2 == 2 &&  <ExportButton gridRef={gridRef} fileName="BED123.xlsx"/>} 
     </div>
     {status2 == 0 &&  <button onClick={submitForReview} className="bg-teal-800 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded print:hidden">Submit for Review</button> } 
+
     <AgGridReact  theme={themeBalham}
              ref={gridRef} // Ref for accessing Grid's API
               getRowId={getRowId}
@@ -561,6 +564,7 @@ const page = () => {
               showOpenedGroup={true}
              suppressGroupRowsSticky={true}
              groupHideParentOfSingleChild ={true} 
+               excelStyles={custom.excelStyles}
     />
 </div>
 

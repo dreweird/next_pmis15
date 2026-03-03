@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 model budget_assignment {
@@ -195,6 +195,15 @@ model mfo {
   remarks_q4       String @db.Text
 }
 
+model proposal {
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  item    String @db.VarChar(500)
+  qty     Int
+  enduser String @db.VarChar(500)
+  purpose String @db.Text
+}
+
 model remarks {
   id           Int    @id @default(autoincrement())
   mfo_id       Int
@@ -240,13 +249,4 @@ model users {
   status_a   Int       @default(0) @db.TinyInt
 
   @@index([program_id], map: "program_id")
-}
-
-model proposal {
-  id      Int    @id @default(autoincrement())
-  user_id Int
-  item    String @db.VarChar(500)
-  qty     Int
-  enduser String @db.VarChar(500)
-  purpose String @db.Text
 }

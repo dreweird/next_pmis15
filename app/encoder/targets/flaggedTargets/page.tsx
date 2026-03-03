@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../../../utils/valueGetters';
@@ -465,24 +465,23 @@ const page = () => {
         
     
 
-          const autoGroupColumnDef: ColDef = useMemo(() => {
-            return {
-                  headerName: 'MFOs/PAPs',
-                  pinned: 'left',
-                  width: 350,
-                  resizable: true,
-                  field: "name",
-                  cellRenderer: "agGroupCellRenderer",
-                  cellRendererParams: {
-                      suppressCount: true,
-                      innerRenderer: SimpleCellRenderer,
-                      //checkbox: false,
-                  },
-                  cellClass: ['data'],
-           
-                  
-              };
-          }, []);
+      const autoGroupColumnDef = useMemo<AutoGroupColumnDef>(() => {
+        return {
+          headerName: 'MFOs/PAPs',
+          pinned: 'left',
+          width: 350,
+          resizable: true,
+          field: "name",
+          cellRenderer: "agGroupCellRenderer",
+          cellRendererParams: {
+              suppressCount: true,
+              innerRenderer: custom.SimpleCellRenderer,
+              //checkbox: false,
+          },
+          cellClass: ['data'],
+          cellClassRules: {"bold": params => params.node.group ? true : false}         
+          };
+       }, []);
 
         
         const columnTypes = useMemo(() => {
@@ -595,7 +594,7 @@ const page = () => {
               onCellValueChanged={onCellValueChanged}
               autoGroupColumnDef={autoGroupColumnDef}
 
-              showOpenedGroup={true}
+             // showOpenedGroup={true}
              suppressGroupRowsSticky={true}
              groupHideParentOfSingleChild ={true} 
     />

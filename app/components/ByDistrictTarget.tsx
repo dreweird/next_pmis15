@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../utils/valueGetters';
@@ -139,7 +139,7 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue }) =>
         }, []);
       
 
-      const autoGroupColumnDef: ColDef = useMemo(() => {
+      const autoGroupColumnDef = useMemo<AutoGroupColumnDef>(() => {
         return {
           headerName: 'MFOs/PAPs',
           pinned: 'left',
@@ -149,10 +149,13 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue }) =>
           cellRenderer: "agGroupCellRenderer",
           cellRendererParams: {
               suppressCount: true,
+              innerRenderer: custom.SimpleCellRenderer,
+              //checkbox: false,
           },
-          cellClassRules: {"bold": params => params.node.group ? true : false}  
-      };
-      }, []);
+          cellClass: ['data'],
+          cellClassRules: {"bold": params => params.node.group ? true : false}         
+          };
+       }, []);
 
     const onCellValueChanged = async (event: any) => {
       const res = updateDataDistrict(event.data.id, event.colDef.field, event.newValue);

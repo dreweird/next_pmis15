@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import * as custom from '../utils/valueGetters';
@@ -414,8 +414,8 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
             enableClickSelection: true,
           };
         }, []);
-      
-      const autoGroupColumnDef: ColDef = useMemo(() => {
+
+          const autoGroupColumnDef = useMemo<AutoGroupColumnDef>(() => {
         return {
           headerName: 'MFOs/PAPs',
           pinned: 'left',
@@ -431,7 +431,9 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
           cellClass: ['data'],
           cellClassRules: {"bold": params => params.node.group ? true : false}         
           };
-      }, []);
+       }, []);
+      
+
 
       const onCellValueChanged = async (event: any) => {
         const res = updateData(event.data.mfo_id, event.colDef.field, event.newValue);
@@ -453,14 +455,11 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
                        animateRows={true} // Optional - set to 'true' to have rows animate when sorted
                        groupDefaultExpanded = {-1}
                        columnTypes={columnTypes}
-                       suppressAggFuncInHeader={true}
-                
+                       suppressAggFuncInHeader={true}               
                        rowSelection={rowSelection}
                        getRowClass={getRowClass}
                        onCellValueChanged={onCellValueChanged}
                        autoGroupColumnDef={autoGroupColumnDef}
-         
-                       showOpenedGroup={true}
                       suppressGroupRowsSticky={true}
                       groupHideParentOfSingleChild ={true} 
                        excelStyles={custom.excelStyles}
