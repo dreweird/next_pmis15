@@ -17,7 +17,7 @@ const adapter = new PrismaMariaDb({
 
 declare global {
   // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
+  var prisma: PrismaClient | any;
 }
 
 export const db =

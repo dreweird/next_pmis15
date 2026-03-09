@@ -12,7 +12,7 @@ export  async function GET(){
   }
   try {
     const result = await db.$queryRaw`
-      SELECT district.id, district.province, district.municipal, 
+      SELECT district.id, district.province, district.municipal, district.barangay, 
       district.target,district.cost,district.groups,mfo.name, mfo.mfo_id, district.flagged, district.remarks,
       district.jan, district.feb, district.mar, district.apr, district.may, district.jun,
       district.jul, district.aug, district.sep, district.oct, district.nov, district.dece FROM district

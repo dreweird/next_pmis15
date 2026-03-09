@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
@@ -30,9 +30,11 @@ const page = () => {
         const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
           { field: 'name',  rowGroup: true, hide: true},
           { field: 'province',  rowGroup: true, hide: true},
-          {headerName: "Target", field: 'target', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
-          {headerName: "Cost", field: 'cost', minWidth: 50, editable: true, valueFormatter: custom.currencyFormatter},
-          {headerName: "Groups", field: 'groups', minWidth: 100, editable: true},
+          {headerName: "Barangay", field: 'barangay', minWidth: 100, editable: false},
+        {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
+        {headerName: "Cost", field: 'cost', minWidth: 50, valueFormatter: custom.currencyFormatter, cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
+   
+          {headerName: "Group Name", field: 'groups', minWidth: 100, editable: true},
           {headerName: "Reviewer's Remarks", field: 'remarks', minWidth: 100, cellStyle: { color: 'white', backgroundColor: 'green' }},
           {headerName:"Status/Actions", field: "Actions",minWidth: 100, editable: true, 
             cellRenderer: (params: any) => {
@@ -97,7 +99,7 @@ const page = () => {
           }, []);
         
 
-        const autoGroupColumnDef: ColDef = useMemo(() => {
+         const autoGroupColumnDef: AutoGroupColumnDef = useMemo(() => {
           return {
             headerName: 'MFOs/PAPs',
             pinned: 'left',

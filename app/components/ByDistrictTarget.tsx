@@ -91,9 +91,10 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue }) =>
       { field: 'mfo_id',  hide: true},
       { field: 'name',  rowGroup: true, hide: true},
       { field: 'province',  rowGroup: true, hide: true},
+       {headerName: "Barangay", field: 'barangay', minWidth: 100, editable: false},
       {headerName: "Annual Target", field: 'target', minWidth: 50, editable: false, valueFormatter: custom.currencyFormatter,  cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
-    {headerName: "Cost", field: 'cost', minWidth: 50},
-    {headerName: "Groups", field: 'groups', minWidth: 100},
+    {headerName: "Cost", field: 'cost', minWidth: 50, valueFormatter: custom.currencyFormatter, cellStyle: custom.customStyleGroupQuarter, aggFunc: 'sum'},
+    {headerName: "Group Name", field: 'groups', minWidth: 100},
     {headerName: "Action",  field:"flagged", minWidth: 100, cellRenderer: (params: any) => {
       if (params.node.group) return;
       if (params.data.flagged == 0) return (

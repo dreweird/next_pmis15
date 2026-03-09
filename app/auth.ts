@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "./db";
+import type { PrismaClient } from "@prisma/client";  
 
 export const {
   handlers: { GET, POST },
@@ -10,7 +11,7 @@ export const {
   signOut,
   auth,
 } = NextAuth({
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db as unknown as PrismaClient), 
   session: { strategy: "jwt" },
   providers: [
     Credentials({
