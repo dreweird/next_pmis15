@@ -1,6 +1,5 @@
 import { db } from "../../../db";
 import { NextRequest } from "next/server";
-import { Prisma } from "@prisma/client";
 import { auth } from "../../../auth";
 
 export  async function PUT(req: NextRequest){

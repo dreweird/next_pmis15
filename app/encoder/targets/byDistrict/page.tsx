@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import { AutoGroupColumnDef, ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham } from 'ag-grid-community';
+import { ClientSideRowModelModule, ColDef, ColGroupDef, RowSelectionModule, RowSelectionOptions, themeBalham, AutoGroupColumnDef } from 'ag-grid-community';
 import {  ExcelExportModule } from 'ag-grid-enterprise';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { PivotModule, RowGroupingModule, TreeDataModule, LicenseManager } from 'ag-grid-enterprise';
@@ -13,12 +13,19 @@ import * as custom from '../../../utils/valueGetters';
 
 
 ModuleRegistry.registerModules([AllCommunityModule, ClientSideRowModelModule, RowGroupingModule, PivotModule, TreeDataModule, ExcelExportModule, RowSelectionModule]);
-LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_key_{AG-076337}_is_granted_for_evaluation_only___Use_in_production_is_not_permitted___Please_report_misuse_to_legal@ag-grid.com___For_help_with_purchasing_a_production_key_please_contact_info@ag-grid.com___You_are_granted_a_{Single_Application}_Developer_License_for_one_application_only___All_Front-End_JavaScript_developers_working_on_the_application_would_need_to_be_licensed___This_key_will_deactivate_on_{14 March 2025}____[v3]_[0102]_MTc0MTkxMDQwMDAwMA==f7c8723db6b2e4c55a843f86bf24e52d");
- 
+LicenseManager.setLicenseKey("[TRIAL]_this_{AG_Charts_and_AG_Grid}_Enterprise_key_{AG-076337}_is_granted_for_evaluation_only___Use_in_production_is_not_permitted___Please_report_misuse_to_legal@ag-grid.com___For_help_with_purchasing_a_production_key_please_contact_info@ag-grid.com___You_are_granted_a_{Single_Application}_Developer_License_for_one_application_only___All_Front-End_JavaScript_developers_working_on_the_application_would_need_to_be_licensed___This.key_will_deactivate_on_{14 March 2025}____[v3]_[0102]_MTc0MTkxMDQwMDAwMA==f7c8723db6b2e4c55a843f86bf24e52d");
+
+interface RowDataType {
+  id: any;
+  municipal?: string;
+  // allow arbitrary other fields
+  [key: string]: any;
+}
+
 const page = () => {
 
-    const gridRef = useRef<AgGridReact>(null); // Optional - for accessing Grid's API
-    const [rowData, setRowData] = useState<any[]>([]);
+    const gridRef = useRef<AgGridReact<RowDataType>>(null); // Optional - for accessing Grid's API
+    const [rowData, setRowData] = useState<RowDataType[]>([]);
 
     useEffect(() => {
       fetch("/api/byDistrict/list2") // Fetch data from server
@@ -27,7 +34,7 @@ const page = () => {
       
     }, []);
 
-        const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
+        const [colDefs, setColDefs] = useState<(ColDef<RowDataType> | ColGroupDef<RowDataType>)[]>([
           { field: 'name',  rowGroup: true, hide: true},
           { field: 'province',  rowGroup: true, hide: true},
           {headerName: "Barangay", field: 'barangay', minWidth: 100, editable: false},
@@ -99,7 +106,7 @@ const page = () => {
           }, []);
         
 
-         const autoGroupColumnDef: AutoGroupColumnDef = useMemo(() => {
+        const autoGroupColumnDef: AutoGroupColumnDef<RowDataType> = useMemo(() => {
           return {
             headerName: 'MFOs/PAPs',
             pinned: 'left',
@@ -121,7 +128,7 @@ const page = () => {
       };
         
 
-          const getRowId = (params: { data: { id: any; }; }) => params.data.id.toString();
+          const getRowId = (params: { data: RowDataType; }) => params.data.id.toString();
           const rowSelection = useMemo<RowSelectionOptions | "single" | "multiple" >(() => {
               return {
                 mode: "singleRow",
