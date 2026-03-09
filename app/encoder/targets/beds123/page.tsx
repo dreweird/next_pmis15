@@ -441,7 +441,7 @@ const page = () => {
                 minWidth: 100,
                 aggFunc: 'sum',
                 // valueParser: 'Number(newValue)',
-                valueParser: (params: { newValue: any; }) => Number(params.newValue),
+                valueParser: (params: { newValue: any; }) => parseFloat(params.newValue),
                 cellStyle: custom.customStyleGroup,
                 valueFormatter: custom.currencyFormatter
               },

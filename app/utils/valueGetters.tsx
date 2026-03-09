@@ -880,59 +880,49 @@ export function TotalpercentAggFunc(params: any) {
 //////////PHYSICAL
 
 export function Q1_Physical(params: any) {
-  if (!params.node.group) {
-    if (params.data.main) {
-      return -Math.abs(params.data.jan_pt);
-    } else {
-      return create_totalABC(
-        params.data.jan_pt,
-        params.data.feb_pt,
-        params.data.mar_pt
-      );
-    }
+  // Skip group rows
+  if (params.node.group) return;
+
+  const { main, jan_pt, feb_pt, mar_pt } = params.data;
+
+  if (main) {
+    // Find the first non-zero month value
+    const firstNonZero = [jan_pt, feb_pt, mar_pt].find(v => v !== 0);
+    return firstNonZero !== undefined ? -Math.abs(firstNonZero) : undefined;
   }
+
+  // For non-main rows, compute the total
+  return create_totalABC(jan_pt, feb_pt, mar_pt);
 }
 
 export function Q2_Physical(params: any) {
-  if (!params.node.group) {
-    if (params.data.main) {
-      return -Math.abs(params.data.jan_pt);
-    } else {
-      return create_totalABC(
-        params.data.apr_pt,
-        params.data.may_pt,
-        params.data.jun_pt
-      );
-    }
+  if (params.node.group) return;
+  const { main, apr_pt, may_pt, jun_pt } = params.data;
+  if (main) {
+    const firstNonZero = [apr_pt, may_pt, jun_pt].find(v => v !== 0);
+    return firstNonZero !== undefined ? -Math.abs(firstNonZero) : undefined;
   }
+  return create_totalABC(apr_pt, may_pt, jun_pt);
 }
 
 export function Q3_Physical(params: any) {
-  if (!params.node.group) {
-    if (params.data.main) {
-      return -Math.abs(params.data.jan_pt);
-    } else {
-      return create_totalABC(
-        params.data.jul_pt,
-        params.data.aug_pt,
-        params.data.sep_pt
-      );
-    }
+  if (params.node.group) return;
+  const { main, jul_pt, aug_pt, sep_pt } = params.data;
+  if (main) {
+    const firstNonZero = [jul_pt, aug_pt, sep_pt].find(v => v !== 0);
+    return firstNonZero !== undefined ? -Math.abs(firstNonZero) : undefined;
   }
+  return create_totalABC(jul_pt, aug_pt, sep_pt);
 }
 
 export function Q4_Physical(params: any) {
-  if (!params.node.group) {
-    if (params.data.main) {
-      return -Math.abs(params.data.jan_pt);
-    } else {
-      return create_totalABC(
-        params.data.oct_pt,
-        params.data.nov_pt,
-        params.data.dec_pt
-      );
-    }
+  if (params.node.group) return;
+  const { main, oct_pt, nov_pt, dec_pt } = params.data;
+  if (main) {
+    const firstNonZero = [oct_pt, nov_pt, dec_pt].find(v => v !== 0);
+    return firstNonZero !== undefined ? -Math.abs(firstNonZero) : undefined;
   }
+  return create_totalABC(oct_pt, nov_pt, dec_pt);
 }
 
 export function GrandTotal_Physical(params: any) {
@@ -1810,12 +1800,12 @@ export function currencyFormatter(params: {
   if (params.value === undefined || params.value === null) {
     return "";
   }
-  var returnString = Number(number).toLocaleString("en-us", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
+  const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
-  return params.value < 0 ? "(" + returnString + ")" : returnString;
+  return params.value < 0 ? "(" + Math.abs(params.value)  + ")" : formatter.format(params.value) ;
 }
 
 export function SimpleCellRenderer(props: {
