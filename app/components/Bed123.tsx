@@ -504,6 +504,14 @@ const Bed1Component: React.FC<ResultComponentProps> = ({ selectedValue }) => {
             cellStyle: custom.customStyleGroupTotal,
             valueFormatter: custom.currencyFormatter
           },
+            
+          physicalColumn: {
+            minWidth: 110,
+            aggFunc: custom.TotalQuarterAggFunc,
+            cellRenderer: 'agAnimateShowChangeCellRenderer',
+            cellStyle:custom.customStyleGroupPhysical,
+            valueFormatter: custom.currencyFormatter
+                        },
           };
       }, []);
       
