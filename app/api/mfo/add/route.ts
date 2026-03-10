@@ -32,7 +32,19 @@ try {
           remarks_q1: "",
           remarks_q2: "",
           remarks_q3: "",
-          remarks_q4: ""
+          remarks_q4: "",
+          remarks_jan: "",
+          remarks_feb: "",
+          remarks_mar: "",
+          remarks_apr: "",
+          remarks_may: "",
+          remarks_jun: "",
+          remarks_jul: "",
+          remarks_aug: "",
+          remarks_sep: "",
+          remarks_oct: "",
+          remarks_nov: "",
+          remarks_dec: "",
         }
       });
     }

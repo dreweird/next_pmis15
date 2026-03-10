@@ -28,7 +28,7 @@ const Navbar = () => {
 
         {session?.user && session?.user.email === 0 &&   <div className="flex items-center gap-x-5 hover:bg-blue-600 bg-blue-700">
           <Link href="/reviewer">BEDs123</Link>
-          {/* <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link> */}
+          <Link href="/powerbi" className="bg-blue-700 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-blue-600">Power BI</Link>
         </div>}
      
 

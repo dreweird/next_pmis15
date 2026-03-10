@@ -4,7 +4,7 @@ import { PrismaClient } from '../generated/prisma/client'
 
 const prismaClientSingleton = () => {
 const adapter = new PrismaMariaDb({
-  host: "172.16.128.42",
+  host: process.env.DB_HOST,
   port: 3306,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
