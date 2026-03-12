@@ -591,7 +591,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
           cellClass: ["data"],
         },
         {
-          headerName: "June",
+          headerName: "Jun",
           field: "remarks_jun",
           editable: true,
           cellEditor: "agLargeTextCellEditor",

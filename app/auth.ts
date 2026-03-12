@@ -3,8 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "./db";
-import type { PrismaClient } from "@prisma/client";  
-
+// import type { PrismaClient } from "@prisma/client";  
+import type { PrismaClient } from '../generated/prisma/client';
 export const {
   handlers: { GET, POST },
   signIn,
