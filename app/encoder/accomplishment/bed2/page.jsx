@@ -8,6 +8,7 @@ export default function Bed2Page() {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
   const [editableMonth, setEditableMonth] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const id = session?.user?.id;
   const selectedValue = id?.toString() || "";
@@ -19,8 +20,15 @@ export default function Bed2Page() {
         setPosts(data.result);
         const editable = data.result.filter((x) => x.locked === 0);
         setEditableMonth(editable);
-      });
+      })
+      .catch((err) => console.error("Error fetching locked data:", err))
+      .finally(() => setLoading(false));
+
   }, []);
+
+  if (loading) {
+    return <div>Loading grid data…</div>;
+  }
 
   return (
     <div>

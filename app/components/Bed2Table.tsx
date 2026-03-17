@@ -61,6 +61,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
   const [rowData, setRowData] = useState<any[]>([]);
   const { data: session } = useSession();
   const type: number = Number(session?.user?.email); // Only Encoder Account can update the physical accomplishment
+   const [lastDate, setLastDate] = useState<string>("");
 
   useEffect(() => {
     let id = Number(selectedValue);
@@ -69,6 +70,13 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
       .then((rowData) => {
         setRowData(rowData.result);
       }); // Update state of `rowData`
+
+    fetch(`/api/logs/${id}`) // Fetch data from server
+    .then((result) => result.json()) // Convert to JSON
+    .then((rowData) => {
+      console.log("Last updated log:", rowData.result[0]?.date_created);
+      setLastDate(rowData.result[0]?.date_created);
+    }); 
   }, [selectedValue]);
 
   const [colDefs, setColDefs] = useState<(ColDef | ColGroupDef)[]>([
@@ -253,7 +261,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[0].locked == 1
+              locked[0].locked == 0
             );
           },
         },
@@ -268,7 +276,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[1].locked == 1
+              locked[1].locked == 0
             );
           },
         },
@@ -283,7 +291,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[2].locked == 1
+              locked[2].locked == 0
             );
           },
         },
@@ -305,7 +313,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[3].locked == 1
+              locked[3].locked == 0
             );
           },
         },
@@ -320,7 +328,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[4].locked == 1
+              locked[4].locked == 0
             );
           },
         },
@@ -335,7 +343,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[5].locked == 1
+              locked[5].locked == 0
             );
           },
         },
@@ -357,7 +365,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[6].locked == 1
+              locked[6].locked == 0
             );
           },
         },
@@ -372,7 +380,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[7].locked == 1
+              locked[7].locked == 0
             );
           },
         },
@@ -387,7 +395,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[8].locked == 1
+              locked[8].locked == 0
             );
           },
         },
@@ -409,7 +417,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[9].locked == 1
+              locked[9].locked == 0
             );
           },
         },
@@ -424,7 +432,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[10].locked == 1
+              locked[10].locked == 0
             );
           },
         },
@@ -439,7 +447,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
             return (
               params.data.status == 2 &&
               params.data.area == 0 &&
-              locked[11].locked == 1
+              locked[11].locked == 0
             );
           },
         },
@@ -774,8 +782,14 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
   
   
   return (
-    <div style={{ height: 700, width: "100%" }}>
-      <ExportButton gridRef={gridRef} fileName="BED2.xlsx" />
+    <div >
+      <div className="flex justify-between mb-2">
+        <div> <ExportButton gridRef={gridRef} fileName="BED2.xlsx" /></div>
+        <div>Last updated: {custom.timeAgo(new Date(lastDate))}</div>
+      </div>
+    
+      <div style={{ height: 700, width: "100%" }}>
+
       <AgGridReact
         theme={themeBalham}
         ref={gridRef} // Ref for accessing Grid's API
@@ -796,6 +810,8 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
         excelStyles={custom.excelStyles}
       />
     </div>
+    </div>
+    
   );
 };
 

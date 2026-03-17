@@ -16,6 +16,7 @@ export default function AccompLayout({
       <li className="p-4 hover:bg-gray-700 text-sm"> <Link href={"/encoder/accomplishment/bed2"}>BED-2 (Physical)</Link></li>
       <li className="p-4 hover:bg-gray-700 text-sm"> <Link href={"/encoder/accomplishment/bed3"}>BED-3 (Disbursement)</Link></li>
       <li className="p-4 hover:bg-gray-700 text-sm"> <Link href={"/encoder/accomplishment/byDistrict"}>By District</Link></li>
+         <li className="p-4 hover:bg-gray-700 text-sm"> <Link href={"/encoder/accomplishment/logs"}>Logs</Link></li>
       </ul>
       </div>
       <div className="flex-1 p-4">

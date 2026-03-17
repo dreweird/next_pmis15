@@ -926,18 +926,19 @@ export function Q4_Physical(params: any) {
 }
 
 export function GrandTotal_Physical(params: any) {
-  if (!params.node.group) {
-    if (params.data.main) {
-      return -Math.abs(params.data.jan_pt);
-    } else {
-      return create_totalABCD(
-        params.getValue("Q1_pt"),
-        params.getValue("Q2_pt"),
-        params.getValue("Q3_pt"),
-        params.getValue("Q4_pt")
-      );
-    }
+  if (params.node.group) return;
+  const { main, jan_pt, feb_pt, mar_pt, apr_pt, may_pt, jun_pt, jul_pt, aug_pt, sep_pt, oct_pt, nov_pt, dec_pt } = params.data;
+  if (main) {
+    const firstNonZero = [jan_pt, feb_pt, mar_pt, apr_pt, may_pt, jun_pt, jul_pt, aug_pt, sep_pt, oct_pt, nov_pt, dec_pt].find(v => v !== 0);
+    return firstNonZero !== undefined ? -Math.abs(firstNonZero) : undefined;
   }
+  return create_totalABCD(
+    params.getValue("Q1_pt"),
+    params.getValue("Q2_pt"),
+    params.getValue("Q3_pt"),
+    params.getValue("Q4_pt")
+  );
+
 }
 
 export function Q1_PhysicalA(params: any) {
@@ -1862,4 +1863,31 @@ export function autoGroupColumnDef() {
     };
   }, []);
   return autoGroupColumnDef;
+}
+
+export function timeAgo(date: string | number | Date) {
+    const now = new Date();
+    const past = new Date(date);
+    const seconds = Math.floor((now.getTime() - past.getTime()) / 1000);
+
+    if (isNaN(past.getTime())) {
+        return "Invalid date";
+    }
+
+    const intervals = [
+        { label: "year", seconds: 31536000 },
+        { label: "month", seconds: 2592000 },
+        { label: "day", seconds: 86400 },
+        { label: "hour", seconds: 3600 },
+        { label: "minute", seconds: 60 },
+        { label: "second", seconds: 1 }
+    ];
+
+    for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
+        }
+    }
+    return "just now";
 }
