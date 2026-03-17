@@ -575,14 +575,6 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
           cellClass: ["data"],
         },
         {
-          headerName: "Q1",
-          field: "remarks_q1",
-          editable: true,
-          cellEditor: "agLargeTextCellEditor",
-          cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
-          cellClass: ["data"],
-        },
-        {
           headerName: "Apr",
           field: "remarks_apr",
           editable: true,
@@ -601,14 +593,6 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
         {
           headerName: "Jun",
           field: "remarks_jun",
-          editable: true,
-          cellEditor: "agLargeTextCellEditor",
-          cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
-          cellClass: ["data"],
-        },
-        {
-          headerName: "Q2",
-          field: "remarks_q2",
           editable: true,
           cellEditor: "agLargeTextCellEditor",
           cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
@@ -639,14 +623,6 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
           cellClass: ["data"],
         },
         {
-          headerName: "Q3",
-          field: "remarks_q3",
-          editable: true,
-          cellEditor: "agLargeTextCellEditor",
-          cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
-          cellClass: ["data"],
-        },
-        {
           headerName: "Oct",
           field: "remarks_oct",
           editable: true,
@@ -669,15 +645,7 @@ const Bed2Component: React.FC<ResultComponentProps> = ({
           cellEditor: "agLargeTextCellEditor",
           cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
           cellClass: ["data"],
-        },
-        {
-          headerName: "Q4",
-          field: "remarks_q4",
-          editable: true,
-          cellEditor: "agLargeTextCellEditor",
-          cellEditorParams: { maxLength: "3000", cols: "50", rows: 6 },
-          cellClass: ["data"],
-        },
+        }
       ],
     },
   ]);
