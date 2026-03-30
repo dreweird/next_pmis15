@@ -1,18 +1,54 @@
-import React from 'react'
+"use client";
+import { useEffect, useState } from 'react'
 import DistrictComponent from '@/app/components/ByDistrictTable';
-import { auth } from "../../../auth";
+import { useSession } from "next-auth/react";
 
-export default async function DistrictPage(){
+export default function DistrictPage(){
 
-  const session = await auth();
-  const id = session && session.user ? session.user.id : null;
-  const selectedValue = id?.toString() || '';
-  const URL = process.env.NEXT_PUBLIC_API_URL
-  const data = await fetch(`${URL}/api/mfo/locked`)
-  const posts = await data.json()
-  const editableMonth = posts.result.filter(x => x.locked === 1);
-  return <div> Editable Month:  {editableMonth.map(x => {
-    return x.month + ', ';
-  })} <DistrictComponent locked={posts.result} selectedValue={selectedValue} /> </div>; 
+  const { data: session } = useSession();
+  const [posts, setPosts] = useState([]);
+  const [editableMonth, setEditableMonth] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const id = session?.user?.id;
+  const selectedValue = id?.toString() || "";
+
+  useEffect(() => {
+    fetch("/api/mfo/locked")
+      .then((res) => res.json())
+      .then((data) => {
+        setPosts(data.result);
+        const editable = data.result.filter((x) => x.locked === 0);
+        setEditableMonth(editable);
+      })
+      .catch((err) => console.error("Error fetching locked data:", err))
+      .finally(() => setLoading(false));
+
+  }, []);
+
+  if (loading) {
+    return <div>Loading grid data…</div>;
+  }
+
+  return (
+      <div>
+       <div className="mb-3">
+        <span className="font-semibold mr-2">Editable Month:</span>
   
+        {editableMonth.length > 0 ? (
+          editableMonth.map((x) => (
+            <span
+              key={x.month}
+              className="bg-green-100 text-green-700 px-2 py-1 rounded-md text-sm mr-2"
+            >
+              {x.month}
+            </span>
+          ))
+        ) : (
+          <span className="text-red-500">No editable month</span>
+        )}
+      </div>
+        <DistrictComponent locked={posts} selectedValue={selectedValue} />
+      </div>
+    );
 }
