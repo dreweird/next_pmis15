@@ -19,7 +19,7 @@ try {
       data: {
         actions,
         user_id: user_id,
-        date_created: new Date().toDateString()
+        date_created: new Date().toISOString()
       }
     });
 
