@@ -6,7 +6,7 @@ export  async function GET(){
     WITH PMIS AS (
       SELECT
       h1, 
-      mfo_id,
+      mfo_id, m.user_id,
       h4,
       name,
       
@@ -104,7 +104,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '01/01/2026' AS month,
@@ -121,7 +121,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '02/01/2026',
@@ -138,7 +138,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '03/01/2026',
@@ -155,7 +155,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '04/01/2026',
@@ -172,7 +172,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '05/01/2026',
@@ -189,7 +189,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '06/01/2026',
@@ -206,7 +206,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '07/01/2026',
@@ -223,7 +223,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '08/01/2026',
@@ -240,7 +240,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '09/01/2026',
@@ -257,7 +257,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '10/01/2026',
@@ -274,7 +274,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '11/01/2026',
@@ -291,7 +291,7 @@ export  async function GET(){
 
     SELECT 
         h1,
-        mfo_id,
+        mfo_id, user_id,
         h4,
         name,
         '12/01/2026',

@@ -4,8 +4,8 @@ export  async function GET(){
 
   try {
     const result = await db.$queryRaw`
-      SELECT * FROM mfo
-      LEFT JOIN users ON mfo.user_id = users.user_id
+      SELECT * FROM mfo 
+      INNER JOIN users u on mfo.user_id = u.user_id
      `
     return Response.json({ result })
   } catch (error) {
