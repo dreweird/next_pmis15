@@ -1,5 +1,6 @@
 import { db } from "../../../db";
 import { auth } from "../../../auth";
+import { off } from "node:cluster";
 
 export  async function GET(){
 
@@ -16,6 +17,9 @@ export  async function GET(){
           office: {
             not: ""
           }
+        },
+        orderBy: {
+          office: "asc"
         }
       });
     return Response.json({ result })
