@@ -103,10 +103,32 @@ const DistrictComponent: React.FC<ResultComponentProps> = ({ selectedValue, lock
        }, []);
 
     const onCellValueChanged = async (event: any) => {
-      const res = updateDataDistrict(event.data.id, event.colDef.field, event.newValue);
-      const res2 = updateDataMFOfromDistrict(event.data.mfo_id, event.colDef.field, event.newValue);
-      if(await res2 && await res){
-        alert('Data was succesfully updated!');
+      try {
+        const districtUpdated = await updateDataDistrict(
+          event.data.id,
+          event.colDef.field,
+          Number(event.newValue)
+        );
+
+        if (!districtUpdated) {
+          alert('Failed to update district data. Please try again.');
+          return;
+        }
+
+        const mfoUpdated = await updateDataMFOfromDistrict(
+          event.data.mfo_id,
+          event.colDef.field,
+          Number(event.newValue)
+        );
+
+        if (mfoUpdated) {
+          alert('Data was successfully updated!');
+        } else {
+          alert('District data updated, but the MFO summary failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Failed to update district data:', error);
+        alert('An error occurred while updating data.');
       }
     };
       
