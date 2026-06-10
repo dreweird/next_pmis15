@@ -116,7 +116,7 @@ FROM (
     UNION ALL SELECT user_id, 'Dec', h1,h3,h4, NULL, NULL, NULL, NULL, NULL, deca_dt + deca_dtc FROM mfo
 ) AS res
 INNER JOIN users AS u ON u.user_id = res.user_id
-WHERE u.type = 6 AND res.h1 IS NOT NULL AND res.h1 <> '' 
+WHERE u.type = 6 AND res.h1 IS NOT NULL 
 GROUP BY res.month, res.h1
 ORDER BY 
   FIELD(res.month, 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
