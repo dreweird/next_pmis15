@@ -50,10 +50,10 @@ model locked {
 }
 
 model logs {
-  id           Int    @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   user_id      Int
-  actions      String @db.VarChar(200)
-  date_created String @db.VarChar(20)
+  actions      String   @db.VarChar(200)
+  date_created DateTime @default(now()) @db.Timestamp(0)
 }
 
 model mfo {
