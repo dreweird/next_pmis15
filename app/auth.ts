@@ -1,17 +1,13 @@
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import { db } from "./db";
-// import type { PrismaClient } from "@prisma/client";  
-import type { PrismaClient } from '../generated/prisma/client';
 export const {
   handlers: { GET, POST },
   signIn,
   signOut,
   auth,
 } = NextAuth({
-  adapter: PrismaAdapter(db as unknown as PrismaClient), 
   session: { strategy: "jwt" },
   providers: [
     Credentials({
@@ -19,7 +15,7 @@ export const {
       credentials: {
         username: {
           label: "Username",
-          type: "string"
+          type: "string",
         },
         password: { label: "Password", type: "password" },
       },
@@ -28,7 +24,7 @@ export const {
           return null;
         }
         const username = credentials.username as string;
-        const user: any = await db.users.findUnique({
+        const user = await db.users.findUnique({
           where: {
             username,
           },
@@ -39,13 +35,24 @@ export const {
         } else {
           const isMatch = bcrypt.compareSync(
             credentials.password as string,
-            user.password
+            user.password,
           );
           if (!isMatch) {
             throw new Error("Incorrect username or password.");
           }
         }
-        return { id: user.user_id, email: user.type, name: user.username }
+        return {
+          id: String(user.user_id),
+          email: user.email,
+          name: user.username,
+          type: user.type,
+          budget: user.budget,
+          verified: user.verified,
+          role: user.role,
+          canEdit: user.canEdit,
+          status: user.status,
+          status_a: user.status_a,
+        };
       },
     }),
   ],
@@ -57,7 +64,14 @@ export const {
       if (user) {
         token.user_id = user.id;
         token.username = user.name;
-        token.type = user.email;
+        token.email = user.email;
+        token.type = user.type;
+        token.budget = user.budget;
+        token.verified = user.verified;
+        token.role = user.role;
+        token.canEdit = user.canEdit;
+        token.status = user.status;
+        token.status_a = user.status_a;
       }
 
       return token;
@@ -67,10 +81,16 @@ export const {
         session.user.id = token.user_id as string;
         session.user.name = token.username as string;
         session.user.email = token.type as string;
+        session.user.type = token.type as number;
+        session.user.budget = token.budget as number;
+        session.user.verified = token.verified as number;
+        session.user.role = token.role as number;
+        session.user.canEdit = token.canEdit as number;
+        session.user.status = token.status as number;
+        session.user.status_a = token.status_a as number;
       }
 
       return session;
     },
   },
 });
-
